@@ -12,7 +12,11 @@ module.exports = {
       },
       colors: {
         primary: '#3bc0d2',
-        primaryDarker: '#00acc4'
+        primaryDarker: '#00acc4',
+        dark: '#1E1E1E'
+      },
+      textColor: {
+        whiteWater: '#DBE7E8'
       }
     },
   },
