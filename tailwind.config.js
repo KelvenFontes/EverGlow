@@ -6,7 +6,15 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'girl-background': 'url(/img_girl.png)'
+      },
+      colors: {
+        primary: '#3bc0d2',
+        primaryDarker: '#00acc4'
+      }
+    },
   },
   plugins: [],
 }
