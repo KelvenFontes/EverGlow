@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer";
 import ContinueListening from "./components/ContinueListening";
-import Header from "./components/Header";
+import Header from "@/components/Header";
 import TopMixes from "./components/TopMixes";
 
 const Home = () => {
