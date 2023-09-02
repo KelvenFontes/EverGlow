@@ -48,20 +48,21 @@ const Search = () => {
         <Header />
       </div>
 
-
-      <div className="relative flex items-center lg:justify-center">
-        <div className="w-full overflow-x-hidden scroll whitespace-nowrap scroll-smooth scrollbar-hide lg:flex lg:items-center lg:justify-center">
-          <div className="flex flex-wrap ">
+      <div className="relative flex items-center pt-8 px-5 lg:justify-center ">
+        <div className="w-full overflow-x-hidden scrollbar-hide whitespace-no-wrap">
+          <div className="flex space-x-4">
             {categories.map((category: SpotifyCategoryItem, i: number) => (
-              <div key={category.id} className="border rounded-full px-3">
-                <p className="text-white">{category.name}</p>
+              <div key={category.id}>
+                <CardCategoryName category={category} />
               </div>
             ))}
-
           </div>
         </div>
       </div>
 
+      <div className="px-5 pt-8">
+        <h3 className="text-primary font-semibold text-lg tracking-widest">Recently played</h3>
+      </div>
 
       <Footer />
     </div>

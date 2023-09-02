@@ -1,18 +1,12 @@
-
 interface CardCategoryNameProps {
   category: SpotifyCategoryItem
 }
 
 const CardCategoryName = ({ category }: CardCategoryNameProps) => {
 
-  // useEffect(() => {
-
-
-  // }, []);
-
   return (
-    <div className="flex flex-col min-h-screen bg-dark">
-      <p className="text-white">{category.name}</p>
+    <div className="border rounded-full px-3 whitespace-nowrap">
+      <p className="text-white font-medium">{category.name}</p>
     </div>
   );
 }
