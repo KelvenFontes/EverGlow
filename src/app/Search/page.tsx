@@ -10,14 +10,16 @@ const Search = () => {
 
   const [search, setSearch] = useState<string | undefined>();
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const access_token = localStorage.getItem('access_token');
 
-  if (search != '') {
-    getSearch()
-  }
-
   async function getSearch() {
+
+    if (selectedCategory === '') {
+      setShowModal(true);
+      return;
+    }
 
     const params = {
       method: 'GET',
@@ -44,21 +46,26 @@ const Search = () => {
 
   }
 
-  useEffect(() => {
-    // if (access_token) {
-    //   console.log('Access Token:', access_token);
-    //   getSearch(access_token);
-    // } else {
-    //   console.log('Access Token não encontrado no localStorage.');
-    // }
-
-  }, []);
-
   return (
     <div className="flex flex-col min-h-screen bg-dark">
       <div className="bg-gradient-to-b from-primaryLight to-dark">
-        <Header search={search} setSearch={setSearch} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} getSearch={getSearch}/>
+        <Header search={search} setSearch={setSearch} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} getSearch={getSearch} />
       </div>
+
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg">
+            <h3 className="text-2xl font-bold mb-4">Selecione uma categoria</h3>
+            <p className="mb-4">Por favor, selecione uma categoria para fazer a pesquisa.</p>
+            <button
+              className="bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors duration-300"
+              onClick={() => setShowModal(false)}
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="flex-1 pb-24">
         <TopGenres />

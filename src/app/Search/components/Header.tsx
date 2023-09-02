@@ -1,8 +1,7 @@
 import Button from "@/components/Button";
 import Image from "next/image";
-// import { SetStateAction, useState } from "react";
 
-import { FaMusic, FaPodcast, FaArtstation, FaSearch } from "react-icons/fa";
+import { FaMusic, FaPodcast, FaCompactDisc, FaMicrophone, FaList, FaArtstation, FaSearch, FaPlay, FaTv, FaHeadphones, FaBook } from "react-icons/fa";
 
 interface HeaderProps {
   search: string | undefined;
@@ -43,67 +42,70 @@ const Header = ({ search, setSearch, selectedCategory, setSelectedCategory, getS
         <Button onClick={handleSearch}><FaSearch /></Button>
       </div>
 
-      <div className="flex items-center justify-center pt-4">
-        <div
-          className={`cursor-pointer mx-2 ${selectedCategory === "album" ? "text-primary" : "text-white"
-            }`}
-          onClick={() => handleCategorySelect("album")}
-        >
-          <FaMusic size={24} />
-          <span className="text-xs">Album</span>
-        </div>
-        <div
-          className={`cursor-pointer mx-2 ${selectedCategory === "artist" ? "text-primary" : "text-white"
-            }`}
-          onClick={() => handleCategorySelect("artist")}
-        >
-          <FaPodcast size={24} />
-          <span className="text-xs">Artist</span>
-        </div>
-        <div
-          className={`cursor-pointer mx-2 ${selectedCategory === "playlist" ? "text-primary" : "text-white"
-            }`}
-          onClick={() => handleCategorySelect("playlist")}
-        >
-          <FaArtstation size={24} />
-          <span className="text-xs">Playlist</span>
-        </div>
+      <div className="relative flex items-center pt-4 px-5 lg:justify-center ">
+        <div className="w-full overflow-x-scroll scrollbar-hide whitespace-no-wrap">
+          <div className="flex space-x-6">
+            <div
+              className={`flex flex-col items-center gap-2 cursor-pointer mx-2 ${selectedCategory === "album" ? "text-primary" : "text-white"
+                }`}
+              onClick={() => handleCategorySelect("album")}
+            >
+              <FaCompactDisc size={20} />
+              <span className="text-xs">Album</span>
+            </div>
+            <div
+              className={`flex flex-col items-center gap-2 cursor-pointer mx-2 ${selectedCategory === "artist" ? "text-primary" : "text-white"
+                }`}
+              onClick={() => handleCategorySelect("artist")}
+            >
+              <FaMicrophone size={20} />
+              <span className="text-xs">Artist</span>
+            </div>
+            <div
+              className={`flex flex-col items-center gap-2 cursor-pointer mx-2 ${selectedCategory === "playlist" ? "text-primary" : "text-white"
+                }`}
+              onClick={() => handleCategorySelect("playlist")}
+            >
+              <FaList size={20} />
+              <span className="text-xs">Playlist</span>
+            </div>
 
-        <div
-          className={`cursor-pointer mx-2 ${selectedCategory === "track" ? "text-primary" : "text-white"
-            }`}
-          onClick={() => handleCategorySelect("track")}
-        >
-          <FaArtstation size={24} />
-          <span className="text-xs">Track</span>
-        </div>
-        <div
-          className={`cursor-pointer mx-2 ${selectedCategory === "show" ? "text-primary" : "text-white"
-            }`}
-          onClick={() => handleCategorySelect("show")}
-        >
-          <FaArtstation size={24} />
-          <span className="text-xs">Show</span>
-        </div>
-        <div
-          className={`cursor-pointer mx-2 ${selectedCategory === "episode" ? "text-primary" : "text-white"
-            }`}
-          onClick={() => handleCategorySelect("episode")}
-        >
-          <FaArtstation size={24} />
-          <span className="text-xs">Episode</span>
-        </div>
-        <div
-          className={`cursor-pointer mx-2 ${selectedCategory === "audioBook" ? "text-primary" : "text-white"
-            }`}
-          onClick={() => handleCategorySelect("audioBook")}
-        >
-          <FaArtstation size={24} />
-          <span className="text-xs">AudioBook</span>
-        </div>
+            <div
+              className={`flex flex-col items-center gap-2 cursor-pointer mx-2 ${selectedCategory === "track" ? "text-primary" : "text-white"
+                }`}
+              onClick={() => handleCategorySelect("track")}
+            >
+              <FaPlay size={20} />
+              <span className="text-xs">Track</span>
+            </div>
+            <div
+              className={`flex flex-col items-center gap-2 cursor-pointer mx-2 ${selectedCategory === "show" ? "text-primary" : "text-white"
+                }`}
+              onClick={() => handleCategorySelect("show")}
+            >
+              <FaTv size={20} />
+              <span className="text-xs">Show</span>
+            </div>
+            <div
+              className={`flex flex-col items-center gap-2 cursor-pointer mx-2 ${selectedCategory === "episode" ? "text-primary" : "text-white"
+                }`}
+              onClick={() => handleCategorySelect("episode")}
+            >
+              <FaHeadphones size={20} />
+              <span className="text-xs">Episode</span>
+            </div>
+            <div
+              className={`flex flex-col items-center gap-2 cursor-pointer mx-2 ${selectedCategory === "audioBook" ? "text-primary" : "text-white"
+                }`}
+              onClick={() => handleCategorySelect("audioBook")}
+            >
+              <FaBook size={20} />
+              <span className="text-xs">AudioBook</span>
+            </div>
 
+          </div>
+        </div>
       </div>
-
 
     </div>
   );
