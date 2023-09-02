@@ -18,7 +18,7 @@ export default function Home() {
           play your favorite tracks on
           <span className="text-primary"> musium</span> now!
         </p>
-        <Button className="text-xl"><Link href='/signin'>Get Started</Link></Button>
+        <Button className="text-xl"><Link href='/Signin'>Get Started</Link></Button>
       </div>
     </div>
 

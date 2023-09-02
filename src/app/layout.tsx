@@ -3,6 +3,8 @@ import { Gothic_A1, Poppins } from 'next/font/google'
 
 import { Metadata } from 'next'
 import { NextAuthProvider } from '@/providers/auth'
+import { ButtonStateProvider } from '@/components/ButtonState'
+import Footer from '@/components/Footer'
 
 const poppins = Gothic_A1({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'] })
 
@@ -21,7 +23,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={poppins.className}>
         <NextAuthProvider>
-          {children}
+          <ButtonStateProvider>
+            {children}
+            {/* <Footer /> */}
+          </ButtonStateProvider>
         </NextAuthProvider>
       </body>
     </html>
