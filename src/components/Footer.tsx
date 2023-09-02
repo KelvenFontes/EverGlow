@@ -10,7 +10,7 @@ const Footer = () => {
   const { activeButton, setActiveButton } = useButtonState();
 
   return (
-    <div className="flex items-center justify-around bg-black py-4 pb-5 fixed bottom-0 left-0 right-0">
+    <div className="flex items-center justify-around py-4 pb-5 fixed bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black to-dark">
       <Link href="/Home">
         <button
           onClick={() => setActiveButton('home')}
