@@ -5,10 +5,16 @@ import TopMixes from "./components/TopMixes";
 
 const Home = () => {
   return (
-    <div className="bg-dark h-screen">
-      <Header />
-      <ContinueListening />
-      <TopMixes />
+    <div className="flex flex-col h-screen bg-dark">
+      <div className="h-32 bg-gradient-to-b from-primaryLight to-dark">
+        <Header />
+      </div>
+
+      <div className="flex-1 mt-[-32px]">
+        <ContinueListening />
+        <TopMixes />
+      </div>
+
       <Footer />
     </div>
   );

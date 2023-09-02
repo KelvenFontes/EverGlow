@@ -1,6 +1,9 @@
 const TopMixes = () => {
   return (
-    <h2>Your Top Mixes</h2>
+    <div className="container mx-auto pl-5 pt-6">
+
+      <h2 className="text-white text-lg font-semibold">Your Top Mixes</h2>
+    </div>
   );
 }
 

@@ -6,21 +6,21 @@ import { BsSliders2Vertical } from 'react-icons/bs';
 
 const Header = () => {
   return (
-    <div className="grid grid-cols-3 p-4 items-center">
+    <div className="grid grid-cols-3 p-4 pt-6 items-center">
       <div className="col-span-2">
         <div className="flex flex-row items-center gap-4">
-          <Image src='/icon.png' alt="image" height={60} width={60} className="rounded-full" />
+          <Image src='/icon.png' alt="image" height={40} width={40} className="rounded-full" />
           <div>
-            <p className="text-white font-semibold">Welcome back!</p>
-            <p className="text-white text-sm">Kelven</p>
+            <p className="text-white font-semibold text-sm">Welcome back!</p>
+            <p className="text-gray-300 text-sm">Kelven</p>
           </div>
         </div>
       </div>
 
-      <div className="flex items-center justify-around">
-        <BsSliders2Vertical color={'white'} size={26}/>
-        <IoMdNotificationsOutline color={'white'} size={26}/>
-        <LuSettings color={'white'} size={26}/>
+      <div className="flex items-center justify-evenly">
+        <BsSliders2Vertical color={'white'} size={18}/>
+        <IoMdNotificationsOutline color={'white'} size={18}/>
+        <LuSettings color={'white'} size={18}/>
       </div>
     </div>
   );

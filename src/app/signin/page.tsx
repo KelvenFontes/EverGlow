@@ -19,9 +19,9 @@ const Signin = () => {
   return (
     <div className='flex flex-col items-center justify-center bg-dark h-screen gap-6'>
 
-      <Image src='/icon.png' width={300} height={300} alt='logo' />
+      <Image src='/icon.png' width={250} height={250} alt='logo' />
 
-      <h1 className='text-white font-semibold text-5xl'>lets get you in</h1>
+      <h1 className='text-white font-semibold text-4xl'>lets get you in</h1>
       {status === 'unauthenticated' && (
         <div className='flex flex-col gap-4'>
 
