@@ -61,25 +61,27 @@ const FooterMusic = () => {
 
   console.log(musicPlaying);
   return (
-    <div className="flex items-center justify-around py-4 pb-5 fixed bottom-20 left-0 right-0 h-20 bg-gradient-to-b from-primary to-dark">
+    <div className="flex items-center justify-around py-4 pb-5 fixed bottom-20 left-0 right-0 h-[4.5rem] bg-gradient-to-b from-primary to-dark rounded-t-xl">
 
       {musicPlaying && musicPlaying.album && musicPlaying.album.images && musicPlaying.album.images.length > 0 ? (
-        <Link href={`/Music/${musicPlaying.id}`}>
-          <div className="w-[100%]">
+        <div>
+          <Link href={`/Music/${musicPlaying.id}`}>
+
             <div className="flex items-center">
-              <Image src={musicPlaying.album.images[0].url} alt={musicPlaying.name} height={80} width={80} className="object-cover rounded-xl" />
+              <Image src={musicPlaying.album.images[0].url} alt={musicPlaying.name} height={50} width={50} className="object-cover rounded-xl" />
               <div className="ml-4">
                 <h3 className="text-lg text-gray-300 font-medium">{musicPlaying.name}</h3>
               </div>
             </div>
+          </Link>
 
-            {/* Barra de Progresso */}
-            <div className="bg-gray-100 w-[80%] h-2 rounded-full">
-              <div className="bg-primary h-full rounded-full" style={{ width: `${(musicProgress! / musicPlaying.duration_ms) * 100}%` }}></div>
-            </div>
-
+          {/* Barra de Progresso */}
+          <div className="bg-gray-100 w-[95%] h-2 rounded-full fixed bottom-20 left-[2.5%] right-[2.5%]">
+            <div className="bg-primary h-full rounded-full" style={{ width: `${(musicProgress! / musicPlaying.duration_ms) * 100}%` }}></div>
           </div>
-        </Link>
+        </div>
+
+
       ) : (
         <div className="flex items-center">
           <Image src='/icon.png' alt="Default Image" height={80} width={80} className="object-cover rounded-xl" />
