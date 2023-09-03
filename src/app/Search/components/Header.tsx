@@ -4,9 +4,9 @@ import Image from "next/image";
 import { FaMusic, FaPodcast, FaCompactDisc, FaMicrophone, FaList, FaArtstation, FaSearch, FaPlay, FaTv, FaHeadphones, FaBook } from "react-icons/fa";
 
 interface HeaderProps {
-  search: string | undefined;
+  search: string;
   setSearch: (value: string) => void;
-  selectedCategory: string | undefined;
+  selectedCategory: string;
   setSelectedCategory: (value: string) => void;
   getSearch: () => void;
 }

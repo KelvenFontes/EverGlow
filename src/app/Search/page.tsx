@@ -5,16 +5,39 @@ import Header from "./components/Header";
 import TopGenres from "./components/TopGenres";
 import BrowseAll from "./components/BrowseAll";
 import { useEffect, useState } from "react";
+// import SearchResults from "./components/SearchResultsArtist";
+import Image from "next/image";
+import SearchResultsArtist from "./components/SearchResultsArtist";
+import SearchResults from "./components/SearchResults";
 
 const Search = () => {
 
-  const [search, setSearch] = useState<string | undefined>();
+  const [ access_token, setToken ] = useState<string | null>('');
+  const [search, setSearch] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [searchResults, setSearchResults] = useState({
+    albums: [],
+    artists: [],
+    playlists: [],
+    tracks: [],
+    shows: [],
+    episodes: [],
+    audioBooks: []
+  });
 
-  const access_token = localStorage.getItem('access_token');
+
+
+  useEffect(() => {
+
+    const token = localStorage.getItem('access_token');
+    setToken(token);
+
+  }, [])
 
   async function getSearch() {
+
+    console.log(search);
 
     if (selectedCategory === '') {
       setShowModal(true);
@@ -29,19 +52,102 @@ const Search = () => {
       },
     };
 
-    if (selectedCategory) {
-      console.log(selectedCategory);
+    console.log(`search?q=${search}`)
 
-      const result = await fetch(`https://api.spotify.com/v1/search?q=${search}remaster&type=${selectedCategory}`, params);
-      const data = await result.json();
+    const result = await fetch(`https://api.spotify.com/v1/search?q=${search}remaster&type=${selectedCategory}`, params);
+    const data = await result.json();
+    console.log(data);
+    console.log(result);
 
-      console.log(data);
-
-      if (data.categories) {
-        setSearch(data.categories.items);
-      }
+    if (data.albums) {
+      setSearchResults((prevState) => ({
+        ...prevState,
+        albums: data.albums.items,
+      }));
+      console.log(data)
     } else {
-      console.log('selecione uma categoria')
+      setSearchResults((prevState) => ({
+        ...prevState,
+        albums: [],
+      }));
+    }
+
+    if (data.artists) {
+      setSearchResults((prevState) => ({
+        ...prevState,
+        artists: data.artists.items,
+      }));
+      console.log(data)
+    } else {
+      setSearchResults((prevState) => ({
+        ...prevState,
+        artists: [],
+      }));
+    }
+
+    if (data.playlists) {
+      setSearchResults((prevState) => ({
+        ...prevState,
+        playlists: data.playlists.items,
+      }));
+      console.log(data)
+    } else {
+      setSearchResults((prevState) => ({
+        ...prevState,
+        playlists: [],
+      }));
+    }
+
+    if (data.tracks) {
+      setSearchResults((prevState) => ({
+        ...prevState,
+        tracks: data.tracks.items,
+      }));
+      console.log(data)
+    } else {
+      setSearchResults((prevState) => ({
+        ...prevState,
+        tracks: [],
+      }));
+    }
+
+    if (data.shows) {
+      setSearchResults((prevState) => ({
+        ...prevState,
+        shows: data.shows.items,
+      }));
+      console.log(data)
+    } else {
+      setSearchResults((prevState) => ({
+        ...prevState,
+        shows: [],
+      }));
+    }
+
+    if (data.episodes) {
+      setSearchResults((prevState) => ({
+        ...prevState,
+        episodes: data.episodes.items,
+      }));
+      console.log(data)
+    } else {
+      setSearchResults((prevState) => ({
+        ...prevState,
+        episodes: [],
+      }));
+    }
+
+    if (data.audioBooks) {
+      setSearchResults((prevState) => ({
+        ...prevState,
+        audioBooks: data.audioBooks.items,
+      }));
+      console.log(data)
+    } else {
+      setSearchResults((prevState) => ({
+        ...prevState,
+        audioBooks: [],
+      }));
     }
 
   }
@@ -67,9 +173,84 @@ const Search = () => {
         </div>
       )}
 
-      <div className="flex-1 pb-24">
-        <TopGenres />
-        <BrowseAll />
+      <div className="flex-1 pb-24 px-5">
+        {searchResults.albums.length !== 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            {searchResults.albums.map((album: SpotifyCategoryItem) => (
+              <div key={album.id} className="shadow-lg rounded-lg overflow-hidden">
+                <SearchResults result={album} />
+              </div>
+            ))}
+          </div>
+        ) : null}
+
+        {searchResults.artists.length !== 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            {searchResults.artists.map((artist: SpotifyCategoryItem) => (
+              <div key={artist.id} className="shadow-lg rounded-lg overflow-hidden">
+                <SearchResultsArtist result={artist} />
+              </div>
+            ))}
+          </div>
+        ) : null}
+
+        {searchResults.playlists.length !== 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            {searchResults.playlists.map((playlist: SpotifyCategoryItem) => (
+              <div key={playlist.id} className="shadow-lg rounded-lg overflow-hidden">
+                <SearchResults result={playlist} />
+              </div>
+            ))}
+          </div>
+        ) : null}
+
+        {searchResults.tracks.length !== 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            {searchResults.tracks.map((track: SpotifyCategoryItem) => (
+              <div key={track.id} className="shadow-lg rounded-lg overflow-hidden">
+                <SearchResults result={track} />
+              </div>
+            ))}
+          </div>
+        ) : null}
+
+        {searchResults.shows.length !== 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            {searchResults.shows.map((show: SpotifyCategoryItem) => (
+              <div key={show?.id} className="shadow-lg rounded-lg overflow-hidden">
+                <SearchResults result={show} />
+              </div>
+            ))}
+          </div>
+        ) : null}
+
+        {searchResults.episodes.length !== 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            {searchResults.episodes.map((episode: SpotifyCategoryItem) => (
+              <div key={episode.id} className="shadow-lg rounded-lg overflow-hidden">
+                <SearchResults result={episode} />
+              </div>
+            ))}
+          </div>
+        ) : null}
+
+        {searchResults.audioBooks.length !== 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            {searchResults.audioBooks.map((audioBook: SpotifyCategoryItem) => (
+              <div key={audioBook.id} className="shadow-lg rounded-lg overflow-hidden">
+                <SearchResults result={audioBook} />
+              </div>
+            ))}
+          </div>
+        ) : null}
+
+        {Object.values(searchResults).every(result => result.length === 0) && (
+          <>
+            <TopGenres />
+            <BrowseAll />
+          </>
+        )}
+
       </div>
 
       <Footer />

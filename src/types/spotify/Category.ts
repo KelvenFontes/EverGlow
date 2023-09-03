@@ -9,6 +9,8 @@ interface SpotifyCategory {
 }
 
 interface SpotifyCategoryItem {
+  images: any;
+  imageURL: string;
   href: string;
   icons: SpotifyImage[];
   id: string;
