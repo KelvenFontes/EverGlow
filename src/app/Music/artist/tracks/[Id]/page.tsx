@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import Image from 'next/image';
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
+import Link from "next/link";
 
 const TracksArtist = ({ params }: { params: { Id: string } }) => {
 
@@ -79,18 +80,20 @@ const TracksArtist = ({ params }: { params: { Id: string } }) => {
         </div>
 
         {artist.map((artist: any) => (
-          <div key={artist?.id} className="flex items-center pb-3 px-2">
-            {artist.album?.images && artist.album.images.length > 0 ? (
-              <Image src={artist.album.images[0].url} alt={artist.name} height={60} width={60} className="object-cover rounded-md" />
-            ) : (
-              <Image src={artist.album?.imageURL || '/default-image-url.png'} alt={artist.name} height={60} width={60} className="object-cover rounded-md" />
-            )}
+          <Link key={artist?.id} href={`/Music/${artist?.id}`}>
+            <div className="flex items-center pb-3 px-2">
+              {artist.album?.images && artist.album.images.length > 0 ? (
+                <Image src={artist.album.images[0].url} alt={artist.name} height={60} width={60} className="object-cover rounded-md" />
+              ) : (
+                <Image src={artist.album?.imageURL || '/default-image-url.png'} alt={artist.name} height={60} width={60} className="object-cover rounded-md" />
+              )}
 
-            <div className="ml-4">
-              <p className="text-sm text-gray-200 font-semibold">{artist.name}</p>
-              <p className="text-xs text-gray-400 font-medium">{artist.album.name}</p>
+              <div className="ml-4">
+                <p className="text-sm text-gray-200 font-semibold">{artist.name}</p>
+                <p className="text-xs text-gray-400 font-medium">{artist.album.name}</p>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
 
       </div>

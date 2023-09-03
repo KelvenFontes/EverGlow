@@ -20,7 +20,7 @@ const Header = () => {
         <BrowseAll /> */}
       </div>
 
-      <Footer />
+      <Footer activePage={"library"} />
     </div>
   );
 }
