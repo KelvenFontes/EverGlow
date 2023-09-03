@@ -10,18 +10,20 @@ const SearchResultsArtist: React.FC<SearchResultsArtistProps> = ({ result }) => 
     <>
       {result ? (
         <div key={result?.id} className="flex items-center">
-          <Link href={`/Music/artist/${result?.id}`}>
-          {result.images && result.images.length > 0 ? (
-            <Image src={result.images[0].url} alt={result.name} height={80} width={80} className="object-cover rounded-full" />
-          ) : (
-            <Image src={result.imageURL} alt={result.name} height={80} width={80} className="object-cover rounded-full" />
-          )}
+          <Link href={`/Music/artist/tracks/${result?.id}`}>
+            <div className="flex items-center">
+              {result.images && result.images.length > 0 ? (
+                <Image src={result.images[0].url} alt={result.name} height={80} width={80} className="object-cover rounded-full" />
+              ) : (
+                <Image src={result.imageURL} alt={result.name} height={80} width={80} className="object-cover rounded-full" />
+              )}
 
-          <div className="ml-4">
-            <h3 className="text-lg text-gray-300 font-semibold">{result.name}</h3>
-          </div>
+              <div className="ml-4">
+                <h3 className="text-lg text-gray-300 font-medium">{result.name}</h3>
+              </div>
+            </div>
           </Link>
-        </div>
+        </div >
       ) : null}
     </>
   );

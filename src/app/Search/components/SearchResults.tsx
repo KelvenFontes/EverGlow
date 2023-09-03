@@ -16,7 +16,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ result }) => {
           )}
 
           <div className="ml-4">
-            <h3 className="text-lg text-gray-300 font-semibold">{result.name}</h3>
+            <h3 className="text-lg text-gray-300 font-medium">{result.name}</h3>
           </div>
         </div>
       ) : null}
