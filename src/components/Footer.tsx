@@ -5,7 +5,13 @@ import { BiBookBookmark, BiHomeAlt2, BiSearchAlt2 } from 'react-icons/bi';
 
 import { useButtonState } from './ButtonState';
 
-const Footer = () => {
+type ActivePage = 'home' | 'explore' | 'library';
+
+interface FooterProps {
+  activePage: ActivePage;
+}
+
+const Footer = ({ activePage }:FooterProps) => {
 
   const { activeButton, setActiveButton } = useButtonState();
 
@@ -14,8 +20,7 @@ const Footer = () => {
       <Link href="/Home">
         <button
           onClick={() => setActiveButton('home')}
-          className={`flex flex-col items-center justify-center gap-1 ${activeButton === 'home' ? 'text-primary' : 'text-white'
-            } cursor-pointer text-2xl`}
+          className={`flex flex-col items-center justify-center gap-1 ${activePage === 'home' ? 'text-primary' : 'text-white'} cursor-pointer text-2xl`}
         >
           <BiHomeAlt2 className="size-20" />
           <span className="text-sm font-semibold">Home</span>
@@ -25,8 +30,7 @@ const Footer = () => {
       <Link href="/Search">
         <button
           onClick={() => setActiveButton('explore')}
-          className={`flex flex-col items-center justify-center gap-1 ${activeButton === 'explore' ? 'text-primary' : 'text-white'
-            } cursor-pointer text-2xl`}
+          className={`flex flex-col items-center justify-center gap-1 ${activePage === 'explore' ? 'text-primary' : 'text-white'} cursor-pointer text-2xl`}
         >
           <BiSearchAlt2 className="size-20" />
           <span className="text-sm font-semibold">Explore</span>
@@ -36,8 +40,8 @@ const Footer = () => {
       <Link href="/Library">
         <button
           onClick={() => setActiveButton('library')}
-          className={`flex flex-col items-center justify-center gap-1 ${activeButton === 'library' ? 'text-primary' : 'text-white'
-            } cursor-pointer text-2xl`}
+          className={`flex flex-col items-center justify-center gap-1 ${activePage === 'library' ? 'text-primary' : 'text-white'
+        } cursor-pointer text-2xl`}
         >
           <BiBookBookmark className="size-20" />
           <span className="text-sm font-semibold">Library</span>

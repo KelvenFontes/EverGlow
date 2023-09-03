@@ -17,7 +17,7 @@ const Home = () => {
         <Recommendation />
       </div>
 
-      <Footer />
+      <Footer activePage={"home"} />
     </div>
   );
 }

@@ -253,7 +253,7 @@ const Search = () => {
 
       </div>
 
-      <Footer />
+      <Footer activePage={"explore"} />
     </div>
   );
 }

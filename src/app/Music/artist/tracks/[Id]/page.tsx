@@ -95,7 +95,7 @@ const TracksArtist = ({ params }: { params: { Id: string } }) => {
 
       </div>
 
-      <Footer />
+      <Footer activePage={"library"} />
 
     </div>
   );

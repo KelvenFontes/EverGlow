@@ -64,7 +64,7 @@ const Search = () => {
         <h3 className="text-primary font-semibold text-lg tracking-widest">Recently played</h3>
       </div>
 
-      <Footer />
+      <Footer activePage={"library"} />
     </div>
   );
 }
