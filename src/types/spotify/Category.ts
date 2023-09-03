@@ -1,4 +1,6 @@
 interface SpotifyCategory {
+  id: null | undefined;
+  icons: any;
   href: string;
   items: SpotifyCategoryItem[];
   limit: number;
@@ -6,9 +8,11 @@ interface SpotifyCategory {
   offset: number;
   previous: string | null;
   total: number;
+  name: string;
 }
 
 interface SpotifyCategoryItem {
+  map(arg0: () => any): unknown;
   images: any;
   imageURL: string;
   href: string;

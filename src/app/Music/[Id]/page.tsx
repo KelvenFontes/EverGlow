@@ -9,9 +9,58 @@ import { access } from "fs";
 
 const MusicById = ({ params }: { params: { Id: string } }) => {
 
+  const [token, setToken] = useState<string>('');
+  // const [artist, setArtist] = useState<SpotifyArtist[]>([]);
+  // const [artistData, setArtistData] = useState<SpotifyArtist[] | any>([]);
+  const musicId = params.Id;
+  // console.log(musicId);
 
+  useEffect(() => {
 
-  const artistId = params.Id;
+    const autenticator_token = localStorage.getItem('access_token');
+    setToken(autenticator_token!);
+    getMusic(token, musicId);
+
+    // getArtist(token, musicId);
+
+  }, [musicId, token]);
+
+  async function getMusic(token: string, artistId: string) {
+    const params = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+        // "uris": ["spotify:track:7r8yMaSOy4XmuhRz7iv1gi"],
+        // "offset": { "position": 5 },
+        // "position_ms": 0
+      },
+    };
+
+    const result = await fetch(`https://api.spotify.com/v1/me/player/play`, params);
+    const data = await result.json();
+
+    // setArtist(data.tracks);
+    console.log(data);
+
+  }
+
+  async function getArtist(token: string, artistId: string) {
+    const params = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+    };
+
+    const result = await fetch(`https://api.spotify.com/v1/artists/${artistId}`, params);
+    const data = await result.json();
+    console.log(data);
+
+    // setArtistData(data);
+
+  }
 
 
 
@@ -48,29 +97,28 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
       <div className="bg-gradient-to-b from-primaryLight to-dark">
         <Header />
       </div>
-      <p className="text-white">teste</p>
-      <Image src="/Music/Rectangle 19.png" alt="logo" height={252} width={263} className="mt-20" />
+
+      <div className="flex flex-col items-center justify-center">
+        {/* <p className="text-white">teste</p> */}
+        <Image src="/Music/Rectangle 19.png" alt="logo" height={252} width={263} className="mt-20" />
+
+        <h3>Grainly days</h3>
+        <p>moody</p>
+
+        {/*lista*/}
+        <div></div>
+        {/*lista*/}
+
+
+        {/*player*/}
+        <div></div>
+        {/*player*/}
+
+
+      </div>
+
     </div>
-    // <div className="flex flex-col bg-dark">
-    //   <div className="bg-gradient-to-b from-primaryLight to-dark">
-    //     <Header />
-    //   </div>
 
-    //   {/* <div className="relative h-20 w-[100%]"> */}
-
-    //   {/* <Image src="/Music/Rectangle 19.png" alt="logo" className="rounded-md" style={{ objectFit: 'cover' }} fill /> */}
-
-    //   {/* </div> */}
-
-    //   <div className="flex-1 pb-24">
-    //   <Image src="/Music/Rectangle 19.png" alt="logo" height={252} width={263} className="mt-20" />
-    //   <p className="text-black text-xl font-bold absolute top-3 left-6 right-0 bottom-0 flex">Pop Mix</p>
-    //     {/* <TopGenres />
-    //     <BrowseAll /> */}
-    //   </div>
-
-    //   <Footer />
-    // </div>
   );
 }
 
