@@ -18,27 +18,38 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
   useEffect(() => {
 
     const autenticator_token = localStorage.getItem('access_token');
-    setToken(autenticator_token!);
-    getMusic(token, musicId);
+
+    if (autenticator_token != '') {
+      setToken(autenticator_token!);
+      getMusic(autenticator_token!, musicId);
+      console.log(autenticator_token);
+    } else {
+      setTimeout(() => {
+        getMusic(token, musicId);
+      }, 5000)
+    }
 
     // getArtist(token, musicId);
 
   }, [musicId, token]);
 
-  async function getMusic(token: string, artistId: string) {
+  async function getMusic(token: string, musicId: string) {
     const params = {
-      method: 'PUT',
+      // method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json',
+
         // "uris": ["spotify:track:7r8yMaSOy4XmuhRz7iv1gi"],
         // "offset": { "position": 5 },
         // "position_ms": 0
       },
     };
 
-    const result = await fetch(`https://api.spotify.com/v1/me/player/play`, params);
+    const result = await fetch(`https://api.spotify.com/v1/me/player/currently-playing`, params);
     const data = await result.json();
+
+    console.log(result);
 
     // setArtist(data.tracks);
     console.log(data);

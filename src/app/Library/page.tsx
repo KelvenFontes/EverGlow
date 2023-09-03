@@ -4,17 +4,20 @@ import Footer from "@/components/Footer";
 import Header from "./components/Header";
 import { useEffect, useState } from "react";
 import CardCategoryName from "./components/CardCategoryName";
+import CardPlaylist from "./components/CardPlaylist";
+import Link from "next/link";
 
-const Search = () => {
+const Library = () => {
 
   const [categories, setCategories] = useState<SpotifyCategoryItem[]>([]);
+  const [playlists, setPlaylists] = useState<SpotifyPlaylist[]>([]);
 
   const access_token = localStorage.getItem('access_token');
 
   async function getCategory(token: string) {
 
     const params = {
-      method: 'GET',
+      // method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
@@ -32,10 +35,31 @@ const Search = () => {
 
   }
 
+  async function getPlaylist() {
+
+    const parame = {
+      // method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + access_token,
+        'Content-Type': 'application/json'
+      },
+    };
+
+    const result = await fetch("https://api.spotify.com/v1/me/playlists", parame);
+    console.log(result);
+    const data = await result.json();
+    console.log(data);
+    setPlaylists(data.items);
+    // setGenres(data.categories.items);
+    // console.log(data.categories.items);
+  }
+
+
   useEffect(() => {
     if (access_token) {
       console.log('Access Token:', access_token);
       getCategory(access_token);
+      getPlaylist();
     } else {
       console.log('Access Token não encontrado no localStorage.');
     }
@@ -64,9 +88,18 @@ const Search = () => {
         <h3 className="text-primary font-semibold text-lg tracking-widest">Recently played</h3>
       </div>
 
+      {playlists.map((playlist) => (
+
+        <div key={playlist.id}>
+          <Link href={`/Music/playlist/${playlist.id!}`}>
+            <CardPlaylist playlist={playlist} />
+          </Link>
+        </div>
+      ))}
+
       <Footer activePage={"library"} />
     </div>
   );
 }
 
-export default Search;
+export default Library;

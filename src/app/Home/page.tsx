@@ -6,45 +6,45 @@ import Header from "@/components/Header";
 import TopMixes from "./components/TopMixes";
 import Recommendation from "./components/Recommendation";
 import { useEffect, useState } from "react";
-import Image from 'next/image';
+
 import Link from "next/link";
 import CardTopMix from "./components/CardTopMix";
 
 const Home = () => {
 
-  const [teste, setTeste] = useState();
+  const [token, setToken] = useState('');
   const [genres, setGenres] = useState<SpotifyCategory[]>([]);
 
   const CLIENT_ID = "4baee310607f4f12b6e000a5299decb2";
   const CLIENT_SECRET = "44900cac48ed4114990e9f37c47f978f";
 
-  const paramsBody = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
-  };
+  // const paramsBody = {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/x-www-form-urlencoded'
+  //   },
+  //   body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
+  // };
 
 
 
-  async function getAccessToken(clientId: string, code: any): Promise<string> {
-    const result = await fetch("https://accounts.spotify.com/api/token", code);
-    console.log(result);
-    const { access_token } = await result.json();
-    console.log(access_token);
-    setTeste(access_token);
+  // async function getAccessToken(clientId: string, code: any): Promise<string> {
+  //   const result = await fetch("https://accounts.spotify.com/api/token", code);
+  //   console.log(result);
+  //   const { access_token } = await result.json();
+  //   console.log(access_token);
+  //   setTeste(access_token);
 
-    // Armazene o access_token no localStorage
-    localStorage.setItem('access_token', access_token);
-    return access_token;
-  }
+  //   // Armazene o access_token no localStorage
+  //   localStorage.setItem('access_token', access_token);
+  //   return access_token;
+  // }
 
   const paramse = {
     method: 'GET',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ' + teste
+      'Authorization': 'Bearer ' + token
     },
     // body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
   };
@@ -56,22 +56,44 @@ const Home = () => {
     console.log(data);
     setGenres(data.categories.items);
     console.log(data.categories.items);
-
-    // const { access_token } = await result.json();
-    // console.log(access_token);
-    // setTeste(access_token);
-
-    // Armazene o access_token no localStorage
-    // localStorage.setItem('access_token', access_token);
-    // return access_token;
   }
 
+
+
+  async function getPlaylist() {
+
+    const parame = {
+      // method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+    };
+
+    const result = await fetch("https://api.spotify.com/v1/me/playlists", parame);
+    console.log(result);
+    const data = await result.json();
+    console.log(data);
+    // setGenres(data.categories.items);
+    // console.log(data.categories.items);
+  }
+
+
   useEffect(() => {
-    getAccessToken(CLIENT_ID, paramsBody)
+    // getAccessToken(CLIENT_ID, paramsBody)
+    const hash = window.location.hash;
+    if (hash) {
+      setToken(hash.substring(1).split("&")[0].split('=')[1]);
+      console.log(hash.substring(1).split("&")[0].split('=')[1]);
+      setTimeout(() => {
+        localStorage.setItem('access_token', hash.substring(1).split("&")[0].split('=')[1]);
+      }, 2000)
+    }
 
     setTimeout(() => {
       getRecommendationGenres();
-    }, 2000)
+      getPlaylist();
+    }, 4000)
 
     // getAlbum();
 

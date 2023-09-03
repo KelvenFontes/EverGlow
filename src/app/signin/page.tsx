@@ -10,10 +10,24 @@ import { BsApple } from 'react-icons/bs';
 
 const Signin = () => {
 
-  const { status, data } = useSession();
+  // const { status, data } = useSession();
 
   const handleLoginClick = () => {
-    signIn();
+    // signIn();
+    const clientId = "4baee310607f4f12b6e000a5299decb2";
+    const redirectUrl = "http://localhost:3000/Home";
+    const apiUrl = "https://accounts.spotify.com/authorize";
+    const scope = [
+      "user-read-email",
+      "user-read-private",
+      "user-modify-playback-state",
+      "user-read-currently-playing",
+      "user-read-recently-played",
+      "user-read-playback-position",
+      "user-top-read",
+    ];
+    window.location.href = `${apiUrl}?client_id=${clientId}&redirect_uri=${redirectUrl}&scope=${scope.join(" ")}&response_type=token&dhow_saialog=true`
+
   };
 
   return (
@@ -22,12 +36,12 @@ const Signin = () => {
       <Image src='/icon.png' width={250} height={250} alt='logo' />
 
       <h1 className='text-white font-semibold text-4xl'>lets get you in</h1>
-      {status === 'unauthenticated' && (
+      {/* {status === 'unauthenticated' && ( */}
         <div className='flex flex-col gap-4'>
 
           <Button className='flex align-center justify-start gap-5 text-sm font-semibold w-72' variant='dark' onClick={handleLoginClick}>
             <Image src='/google.png' height={20} width={20} alt='google' />
-            Continue with Google
+            Continue with Spotify
           </Button>
 
           <Button className='flex align-center justify-start gap-5 text-sm font-semibold w-72' variant='dark' onClick={handleLoginClick}>
@@ -36,9 +50,14 @@ const Signin = () => {
           </Button>
 
           <Button className='flex align-center justify-start gap-5 text-sm font-semibold w-72' variant='dark' onClick={handleLoginClick}>
+            <Image src='/google.png' height={20} width={20} alt='google' />
+            Continue with Google
+          </Button>
+
+          {/* <Button className='flex align-center justify-start gap-5 text-sm font-semibold w-72' variant='dark' onClick={handleLoginClick}>
             <BsApple />
             Continue with Apple
-          </Button>
+          </Button> */}
 
           <div className='flex items-center justify-center'>
             <div className='w-full h-[1px] bg-white'></div>
@@ -54,11 +73,11 @@ const Signin = () => {
           </div>
 
         </div>
-      )}
+      {/* )} */}
 
-      {status === 'authenticated' && data.user && (
+      {/* {status === 'authenticated' && data.user && (
         <Button>Tela initial</Button>
-      )}
+      )} */}
 
     </div>
   );
