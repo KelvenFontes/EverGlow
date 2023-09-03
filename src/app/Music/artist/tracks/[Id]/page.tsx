@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Link from "next/link";
+import FooterMusic from "@/components/FooterMusic";
 
 const TracksArtist = ({ params }: { params: { Id: string } }) => {
 
@@ -98,6 +99,7 @@ const TracksArtist = ({ params }: { params: { Id: string } }) => {
 
       </div>
 
+      <FooterMusic />
       <Footer activePage={"library"} />
 
     </div>

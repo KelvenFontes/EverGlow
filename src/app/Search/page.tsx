@@ -9,10 +9,11 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import SearchResultsArtist from "./components/SearchResultsArtist";
 import SearchResults from "./components/SearchResults";
+import FooterMusic from "@/components/FooterMusic";
 
 const Search = () => {
 
-  const [ access_token, setToken ] = useState<string | null>('');
+  const [access_token, setToken] = useState<string | null>('');
   const [search, setSearch] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -253,6 +254,7 @@ const Search = () => {
 
       </div>
 
+      <FooterMusic />
       <Footer activePage={"explore"} />
     </div>
   );

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import CardCategoryName from "./components/CardCategoryName";
 import CardPlaylist from "./components/CardPlaylist";
 import Link from "next/link";
+import FooterMusic from "@/components/FooterMusic";
 
 const Library = () => {
 
@@ -59,12 +60,33 @@ const Library = () => {
     if (access_token) {
       console.log('Access Token:', access_token);
       getCategory(access_token);
+      getMusics(access_token)
       getPlaylist();
     } else {
       console.log('Access Token não encontrado no localStorage.');
     }
 
   }, []);
+
+
+  async function getMusics(token: string) {
+
+    const parame = {
+      // method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+    };
+
+    const result = await fetch(`https://api.spotify.com/v1/me`, parame);
+    console.log(result);
+    const data = await result.json();
+    console.log(data);
+    // setMusicsByPlaylist(data.tracks.items);
+    // setGenres(data.categories.items);
+    // console.log(data.categories.items);
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-dark">
@@ -97,6 +119,7 @@ const Library = () => {
         </div>
       ))}
 
+      <FooterMusic />
       <Footer activePage={"library"} />
     </div>
   );

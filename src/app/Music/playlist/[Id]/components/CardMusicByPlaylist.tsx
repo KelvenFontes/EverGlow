@@ -22,8 +22,6 @@ const CardMusicByPlaylist = ({ musicByPlaylist }: CardMusicByPlaylistProps) => {
     }, 2000)
   }, [])
 
-
-
   return (
     <div>
       {

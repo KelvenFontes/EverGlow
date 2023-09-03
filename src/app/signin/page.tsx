@@ -23,6 +23,7 @@ const Signin = () => {
       "user-modify-playback-state",
       "user-read-currently-playing",
       "user-read-recently-played",
+      "user-read-playback-state",
       "user-read-playback-position",
       "user-top-read",
     ];

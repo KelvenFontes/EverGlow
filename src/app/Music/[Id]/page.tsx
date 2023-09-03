@@ -4,16 +4,12 @@ import Footer from "@/components/Footer";
 import Header from "./components/Header";
 import { useEffect, useState } from "react";
 import Image from 'next/image';
-import { access } from "fs";
-
 
 const MusicById = ({ params }: { params: { Id: string } }) => {
 
   const [token, setToken] = useState<string>('');
-  // const [artist, setArtist] = useState<SpotifyArtist[]>([]);
-  // const [artistData, setArtistData] = useState<SpotifyArtist[] | any>([]);
+  const [device, setDevice] = useState([]);
   const musicId = params.Id;
-  // console.log(musicId);
 
   useEffect(() => {
 
@@ -21,11 +17,14 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
 
     if (autenticator_token != '') {
       setToken(autenticator_token!);
-      getMusic(autenticator_token!, musicId);
+      playMusic(autenticator_token!, musicId);
+      getDevice(autenticator_token!);
+      playMusicA(autenticator_token!);
       console.log(autenticator_token);
     } else {
       setTimeout(() => {
-        getMusic(token, musicId);
+        playMusic(token, musicId);
+        getDevice(token);
       }, 5000)
     }
 
@@ -33,75 +32,63 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
 
   }, [musicId, token]);
 
-  async function getMusic(token: string, musicId: string) {
+  async function getDevice(token: String) {
+    console.log('entrou no device')
     const params = {
-      // method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json',
-
-        // "uris": ["spotify:track:7r8yMaSOy4XmuhRz7iv1gi"],
-        // "offset": { "position": 5 },
-        // "position_ms": 0
+        'Content-Type': 'application/json'
       },
     };
 
-    const result = await fetch(`https://api.spotify.com/v1/me/player/currently-playing`, params);
+    const result = await fetch(`https://api.spotify.com/v1/me/player/devices`, params);
     const data = await result.json();
 
     console.log(result);
 
     // setArtist(data.tracks);
     console.log(data);
+    setDevice(data.device);
+    console.log(device);
 
   }
 
-  async function getArtist(token: string, artistId: string) {
+
+  async function playMusic(token: string, musicId: string) {
     const params = {
-      method: 'GET',
+      method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
       },
+      body: JSON.stringify({
+        "uris": [`spotify:track:${musicId}`],
+        "device_id": "14f5302560cfebe1b8e7a425b6d7894a4708f15c"
+      })
     };
-
-    const result = await fetch(`https://api.spotify.com/v1/artists/${artistId}`, params);
-    const data = await result.json();
-    console.log(data);
-
-    // setArtistData(data);
+    const result = await fetch(`https://api.spotify.com/v1/me/player/play`, params);
 
   }
 
+  async function playMusicA(token: string) {
+    const params = {
+      // method: 'PUT',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      // body: JSON.stringify({
+      //   "uris": [`spotify:track:${musicId}`],
+      //   "device_id": "14f5302560cfebe1b8e7a425b6d7894a4708f15c"
+      // })
+    };
+    const result = await fetch(`https://api.spotify.com/v1/me/player/currently-playing`, params);
+    const data = await result.json();
+    console.log(result);
+    console.log(data);
+  }
 
 
-
-  // async function getAlbum() {
-
-  //   const paramsAlbum = {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer ' + teste
-  //     },
-  //   };
-
-  //   const result = await fetch(`https://api.spotify.com/v1/search?q=gustavo&type=artist`, paramsAlbum);
-  //   console.log(result);
-  // }
-
-  // useEffect(() => {
-  //   getAccessToken(CLIENT_ID, paramsBody)
-
-  //   getAlbum();
-
-  //   // async function tesete() {
-  //   //   const profile = await fetchProfile(await tokenAcess);
-  //   //   console.log(profile);
-  //   // }
-  //   // tesete();
-
-  // }, [])
 
   return (
     <div className="container mx-auto min-h-screen flex flex-col bg-dark">

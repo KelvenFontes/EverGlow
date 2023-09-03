@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 
 import Link from "next/link";
 import CardTopMix from "./components/CardTopMix";
+import FooterMusic from "@/components/FooterMusic";
 
 const Home = () => {
 
@@ -151,7 +152,7 @@ const Home = () => {
 
         <Recommendation />
       </div>
-
+      <FooterMusic />
       <Footer activePage={"home"} />
     </div>
   );
