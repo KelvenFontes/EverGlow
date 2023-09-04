@@ -1,0 +1,18 @@
+.text-animation-container {
+  overflow: hidden; /* Oculte qualquer conteúdo que vá além do contêiner */
+  white-space: nowrap; /* Evite que o texto quebre em várias linhas */
+}
+
+.text-animation {
+  display: inline-block; /* Tornar o texto um bloco inline para que a animação funcione */
+  animation: slideText 5s linear infinite; /* Use a animação 'slideText' */
+}
+
+@keyframes slideText {
+  0% {
+    transform: translateX(100%); /* Comece da direita */
+  }
+  100% {
+    transform: translateX(-100%); /* Termine na esquerda */
+  }
+}

@@ -26,6 +26,8 @@ const Signin = () => {
       "user-read-playback-state",
       "user-read-playback-position",
       "user-top-read",
+      "user-library-read",
+      "user-library-modify"
     ];
     window.location.href = `${apiUrl}?client_id=${clientId}&redirect_uri=${redirectUrl}&scope=${scope.join(" ")}&response_type=token&dhow_saialog=true`
 

@@ -19,27 +19,35 @@ const Home = () => {
   const CLIENT_ID = "4baee310607f4f12b6e000a5299decb2";
   const CLIENT_SECRET = "44900cac48ed4114990e9f37c47f978f";
 
-  // const paramsBody = {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/x-www-form-urlencoded'
-  //   },
-  //   body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
-  // };
 
 
 
-  // async function getAccessToken(clientId: string, code: any): Promise<string> {
-  //   const result = await fetch("https://accounts.spotify.com/api/token", code);
-  //   console.log(result);
-  //   const { access_token } = await result.json();
-  //   console.log(access_token);
-  //   setTeste(access_token);
 
-  //   // Armazene o access_token no localStorage
-  //   localStorage.setItem('access_token', access_token);
-  //   return access_token;
-  // }
+  async function getRecentlyPlayed() {
+
+    const response = await fetch('https://api.spotify.com/v1/me/player/recently-played', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+
+    const data = await response.json();
+    const recentlyPlayedTracks = data.items; // Lista de faixas recentemente reproduzidas
+
+    // Faça algo com as músicas recentemente reproduzidas
+    console.log('Músicas recentemente reproduzidas:', recentlyPlayedTracks);
+
+
+    console.log(response);
+    console.log(data);
+
+  }
+
+
+
+
 
   const paramse = {
     method: 'GET',
@@ -94,6 +102,10 @@ const Home = () => {
     setTimeout(() => {
       getRecommendationGenres();
       getPlaylist();
+      getRecentlyPlayed()
+
+
+
     }, 4000)
 
     // getAlbum();

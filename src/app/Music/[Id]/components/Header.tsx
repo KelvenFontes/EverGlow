@@ -6,7 +6,11 @@ import { BsArrowLeft, BsThreeDotsVertical } from "react-icons/bs";
 // import TopGenres from "./components/TopGenres";
 // import BrowseAll from "./components/BrowseAll";
 
-const Header = () => {
+interface HeaderProps {
+  musicId: string;
+}
+
+const Header = ({musicId}:HeaderProps) => {
 
   const customIconStyle = {
     strokeWidth: '1', // Ajuste o valor para alterar a espessura da linha
@@ -21,7 +25,7 @@ const Header = () => {
       <div className="flex items-center justify-around gap-10">
         <BsArrowLeft className="text-gray-200 text-3xl cursor-pointer" style={customIconStyle} onClick={handleGoBack} />
         <p className="text-white">From Playlist</p>
-        <Link href={'/'}>
+        <Link href={`/Music/${musicId}/settings`}>
           <BsThreeDotsVertical className="text-gray-200 text-3xl cursor-pointer" />
         </Link>
       </div>
