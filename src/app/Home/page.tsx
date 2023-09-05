@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 import Link from "next/link";
 import CardTopMix from "./components/CardTopMix";
-import FooterMusic from "@/components/FooterMusic";
+// import FooterMusic from "@/components/FooterMusic";
 
 const Home = () => {
 
@@ -19,27 +19,56 @@ const Home = () => {
   // const CLIENT_ID = "4baee310607f4f12b6e000a5299decb2";
   // const CLIENT_SECRET = "44900cac48ed4114990e9f37c47f978f";
 
-  async function getRecentlyPlayed(token: string) {
+  // async function getRecentlyPlayed(token: string) {
 
-    const response = await fetch('https://api.spotify.com/v1/me/player/recently-played', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    });
-
-
-    const data = await response.json();
-
-  }
+  //   const response = await fetch('https://api.spotify.com/v1/me/player/recently-played', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Authorization': `Bearer ${token}`,
+  //     },
+  //   });
 
 
+  //   const data = await response.json();
+
+  // }
+
+
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash) {
+      const tokenAccess = localStorage.getItem('access_token');
+      setToken(tokenAccess!);
+    } else if(hash != ''){
+      const access_token = hash.substring(1).split("&")[0].split('=')[1]
+      setToken(access_token!);
+      localStorage.setItem('access_token', access_token);
+    }
+
+    const intervalId = setInterval(() => {
+      try {
+        setTimeout(() => {
+          getRecommendationGenres(token);
+          // getPlaylist(token);
+          // getRecentlyPlayed(token);
+        }, 2000)
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId)
+
+  }, []);
 
 
 
 
 
   async function getRecommendationGenres(token: string) {
+
+    console.log('entrou aqui')
 
     const paramse = {
       method: 'GET',
@@ -60,40 +89,33 @@ const Home = () => {
 
 
 
-  async function getPlaylist(token: string) {
+  // async function getPlaylist(token: string) {
 
-    const parame = {
-      // method: 'GET',
-      headers: {
-        'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json'
-      },
-    };
+  //   const parame = {
+  //     // method: 'GET',
+  //     headers: {
+  //       'Authorization': 'Bearer ' + token,
+  //       'Content-Type': 'application/json'
+  //     },
+  //   };
 
-    const result = await fetch("https://api.spotify.com/v1/me/playlists", parame);
-    console.log(result);
-    const data = await result.json();
-    console.log(data);
-    // setGenres(data.categories.items);
-    // console.log(data.categories.items);
-  }
-
-
-  useEffect(() => {
-
-    const hash = window.location.hash;
-    if (hash) {
-      setToken(hash.substring(1).split("&")[0].split('=')[1]);
-      // console.log(hash.substring(1).split("&")[0].split('=')[1]);
-      localStorage.setItem('access_token', hash.substring(1).split("&")[0].split('=')[1]);
-    }
-
-    getRecommendationGenres(token);
-    getPlaylist(token);
-    getRecentlyPlayed(token)
+  //   const result = await fetch("https://api.spotify.com/v1/me/playlists", parame);
+  //   console.log(result);
+  //   const data = await result.json();
+  //   console.log(data);
+  //   // setGenres(data.categories.items);
+  //   // console.log(data.categories.items);
+  // }
 
 
-  }, []);
+
+
+  // getRecommendationGenres(token);
+  // getPlaylist(token);
+  // getRecentlyPlayed(token)
+
+
+  // }, []);
 
 
 
@@ -145,7 +167,7 @@ const Home = () => {
 
         <Recommendation />
       </div>
-      <FooterMusic />
+      {/* <FooterMusic /> */}
       <Footer activePage={"home"} />
     </div>
   );
