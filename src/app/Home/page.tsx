@@ -16,14 +16,10 @@ const Home = () => {
   const [token, setToken] = useState('');
   const [genres, setGenres] = useState<SpotifyCategory[]>([]);
 
-  const CLIENT_ID = "4baee310607f4f12b6e000a5299decb2";
-  const CLIENT_SECRET = "44900cac48ed4114990e9f37c47f978f";
+  // const CLIENT_ID = "4baee310607f4f12b6e000a5299decb2";
+  // const CLIENT_SECRET = "44900cac48ed4114990e9f37c47f978f";
 
-
-
-
-
-  async function getRecentlyPlayed() {
+  async function getRecentlyPlayed(token: string) {
 
     const response = await fetch('https://api.spotify.com/v1/me/player/recently-played', {
       method: 'GET',
@@ -34,14 +30,6 @@ const Home = () => {
 
 
     const data = await response.json();
-    const recentlyPlayedTracks = data.items; // Lista de faixas recentemente reproduzidas
-
-    // Faça algo com as músicas recentemente reproduzidas
-    console.log('Músicas recentemente reproduzidas:', recentlyPlayedTracks);
-
-
-    console.log(response);
-    console.log(data);
 
   }
 
@@ -49,16 +37,19 @@ const Home = () => {
 
 
 
-  const paramse = {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ' + token
-    },
-    // body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
-  };
 
-  async function getRecommendationGenres() {
+
+  async function getRecommendationGenres(token: string) {
+
+    const paramse = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + token
+      },
+      // body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
+    };
+
     const result = await fetch("https://api.spotify.com/v1/browse/categories", paramse);
     console.log(result);
     const data = await result.json();
@@ -69,7 +60,7 @@ const Home = () => {
 
 
 
-  async function getPlaylist() {
+  async function getPlaylist(token: string) {
 
     const parame = {
       // method: 'GET',
@@ -89,30 +80,20 @@ const Home = () => {
 
 
   useEffect(() => {
-    // getAccessToken(CLIENT_ID, paramsBody)
+
     const hash = window.location.hash;
     if (hash) {
       setToken(hash.substring(1).split("&")[0].split('=')[1]);
-      console.log(hash.substring(1).split("&")[0].split('=')[1]);
-      setTimeout(() => {
-        localStorage.setItem('access_token', hash.substring(1).split("&")[0].split('=')[1]);
-      }, 2000)
+      // console.log(hash.substring(1).split("&")[0].split('=')[1]);
+      localStorage.setItem('access_token', hash.substring(1).split("&")[0].split('=')[1]);
     }
 
-    setTimeout(() => {
-      getRecommendationGenres();
-      getPlaylist();
-      getRecentlyPlayed()
+    getRecommendationGenres(token);
+    getPlaylist(token);
+    getRecentlyPlayed(token)
 
 
-
-    }, 4000)
-
-    // getAlbum();
-
-
-
-  }, [])
+  }, []);
 
 
 
