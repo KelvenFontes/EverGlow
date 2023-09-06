@@ -11,10 +11,17 @@ import Link from "next/link";
 import CardTopMix from "./components/CardTopMix";
 import FooterMusic from "@/components/FooterMusic";
 
+interface SpotifyRecommendationsProps {
+  accessToken: string;
+  seedArtistId: string;
+  limit: number;
+}
+
 const Home = () => {
 
   const [token, setToken] = useState('');
   const [genres, setGenres] = useState<SpotifyCategory[]>([]);
+  const [recommendedTracks, setRecommendedTracks] = useState<any[]>([]);
 
 
   const CLIENT_ID = "4baee310607f4f12b6e000a5299decb2";
@@ -35,6 +42,8 @@ const Home = () => {
   // }
 
 
+  const limit = 10;
+
 
 
   useEffect(() => {
@@ -42,25 +51,43 @@ const Home = () => {
     if (!hash) {
       const tokenAccess = localStorage.getItem('access_token');
       setToken(tokenAccess!);
+      getSpotifyRecommendations(tokenAccess!)
+      getRecommendationGenres(tokenAccess!);
 
     } else if (hash != '') {
       const access_token = hash.substring(1).split("&")[0].split('=')[1]
       setToken(access_token!);
       localStorage.setItem('access_token', access_token);
+      getSpotifyRecommendations(access_token!)
+      getRecommendationGenres(access_token!);
     }
 
+    getRecommendationGenres(token);
+    getSpotifyRecommendations(token)
     const intervalId = setInterval(() => {
-      try {
-        setTimeout(() => {
-          getRecommendationGenres(token);
-          // getPlaylist(token);
+      // getSpotifyRecommendations(token)
 
-          // getRecentlyPlayed(token);
-        }, 2000)
+      try {
+
+        // getRecommendationGenres(token);
+        // getSpotifyRecommendations(token)
+        // getPlaylist(token);
+
+        // getRecentlyPlayed(token);
+
       } catch (error) {
         console.error("Erro ao buscar dados:", error);
       }
     }, 1000);
+
+
+    // .then((tracks) => {
+    //   setRecommendedTracks(tracks);
+    //   console.log(tracks);
+    // })
+    // .catch((error) => {
+    //   console.error('Erro:', error);
+    // });
 
     // const refreshAccessToken = async () => {
     //   // Fazer a solicitação para obter um novo token aqui
@@ -74,9 +101,15 @@ const Home = () => {
     //   refreshAccessToken();
     // }, 30 * 60 * 1000);
 
+    // if (token) {
+    //   // Chama getSpotifyRecommendations somente se o token estiver definido
+    //   getSpotifyRecommendations(token, '', limit);
+    //   getRecommendationGenres(token);
+    // }
+
     const autenticatorToken = localStorage.getItem('access_token');
     setToken(autenticatorToken!);
-
+    // getSpotifyRecommendations(autenticatorToken!, '', limit)
     // return (() => {
     //   clearInterval(intervalId)
     //   // clearInterval(intervalId2)
@@ -162,7 +195,7 @@ const Home = () => {
       const data = await result.json();
       if (data && data.categories && data.categories.items) {
         setGenres(data.categories.items);
-       
+
       } else {
         console.error('Dados inválidos retornados da API Spotify:', data);
       }
@@ -217,6 +250,32 @@ const Home = () => {
   // }
 
 
+  async function getSpotifyRecommendations(token: string) {
+
+    const apiUrl = `https://api.spotify.com/v1/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&limit=10`;
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao obter recomendações do Spotify.');
+      }
+
+      const data = await response.json();
+      setRecommendedTracks(data.tracks);
+      console.log(data.tracks)
+    } catch (error) {
+      console.error('Erro ao fazer a solicitação:', error);
+    }
+  }
+
+
 
   return (
     <div className="flex flex-col min-h-screen bg-dark">
@@ -226,7 +285,8 @@ const Home = () => {
 
 
 
-      <div className="flex-1 pb-24">
+
+      <div className="flex-1 pb-40">
         <ContinueListening />
 
         <h2 className="text-white text-lg font-semibold pt-8 pb-4 px-5">Your Top Mixes</h2>
@@ -247,10 +307,23 @@ const Home = () => {
         </div>
 
 
+
+
+
+
+        <div>
+          {/* {recommendedTracks.map((track, index) => (
+            <li key={index} className="text-white">{track.name} by {track.artists[0].name}</li>
+          ))} */}
+        </div>
+
+
         {/* <TopMixes category={genres} /> */}
 
+        {/* {recommendedTracks.map((track, index) => ( */}
+        <Recommendation recommendedTracks={recommendedTracks} />
+        {/* ))} */}
 
-        <Recommendation />
       </div>
       <FooterMusic />
       <Footer activePage={"home"} />
