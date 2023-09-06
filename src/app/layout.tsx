@@ -22,12 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <NextAuthProvider>
+        {/* <NextAuthProvider> */}
           <ButtonStateProvider>
             {children}
             {/* <Footer /> */}
           </ButtonStateProvider>
-        </NextAuthProvider>
+        {/* </NextAuthProvider> */}
       </body>
     </html>
   )
