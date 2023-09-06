@@ -12,8 +12,9 @@ const Library = () => {
 
   const [categories, setCategories] = useState<SpotifyCategoryItem[]>([]);
   const [playlists, setPlaylists] = useState<SpotifyPlaylist[]>([]);
+  const [token, setToken] = useState<string>('');
 
-  const access_token = localStorage.getItem('access_token');
+
 
   async function getCategory(token: string) {
 
@@ -36,12 +37,12 @@ const Library = () => {
 
   }
 
-  async function getPlaylist() {
+  async function getPlaylist(token:string) {
 
     const parame = {
       // method: 'GET',
       headers: {
-        'Authorization': 'Bearer ' + access_token,
+        'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
       },
     };
@@ -57,11 +58,13 @@ const Library = () => {
 
 
   useEffect(() => {
+    const access_token = localStorage.getItem('access_token');
+    setToken(access_token!);
     if (access_token) {
       console.log('Access Token:', access_token);
       getCategory(access_token);
       getMusics(access_token)
-      getPlaylist();
+      getPlaylist(access_token);
     } else {
       console.log('Access Token não encontrado no localStorage.');
     }
