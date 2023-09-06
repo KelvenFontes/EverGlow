@@ -9,15 +9,16 @@ import { useEffect, useState } from "react";
 
 import Link from "next/link";
 import CardTopMix from "./components/CardTopMix";
-// import FooterMusic from "@/components/FooterMusic";
+import FooterMusic from "@/components/FooterMusic";
 
 const Home = () => {
 
   const [token, setToken] = useState('');
   const [genres, setGenres] = useState<SpotifyCategory[]>([]);
 
-  // const CLIENT_ID = "4baee310607f4f12b6e000a5299decb2";
-  // const CLIENT_SECRET = "44900cac48ed4114990e9f37c47f978f";
+
+  const CLIENT_ID = "4baee310607f4f12b6e000a5299decb2";
+  const CLIENT_SECRET = "44900cac48ed4114990e9f37c47f978f";
 
   // async function getRecentlyPlayed(token: string) {
 
@@ -35,12 +36,14 @@ const Home = () => {
 
 
 
+
   useEffect(() => {
     const hash = window.location.hash;
     if (!hash) {
       const tokenAccess = localStorage.getItem('access_token');
       setToken(tokenAccess!);
-    } else if(hash != ''){
+
+    } else if (hash != '') {
       const access_token = hash.substring(1).split("&")[0].split('=')[1]
       setToken(access_token!);
       localStorage.setItem('access_token', access_token);
@@ -51,6 +54,7 @@ const Home = () => {
         setTimeout(() => {
           getRecommendationGenres(token);
           // getPlaylist(token);
+
           // getRecentlyPlayed(token);
         }, 2000)
       } catch (error) {
@@ -58,34 +62,115 @@ const Home = () => {
       }
     }, 1000);
 
-    return () => clearInterval(intervalId)
+    // const refreshAccessToken = async () => {
+    //   // Fazer a solicitação para obter um novo token aqui
+    //   const newToken = await fetchNewToken(); // Substitua fetchNewToken pela sua lógica de obtenção de token
+    //   setToken(newToken);
+    // };
+
+    // const intervalId2 = setInterval(() => {
+
+    //   // Defina o intervalo de atualização do token aqui (por exemplo, a cada 30 minutos)
+    //   refreshAccessToken();
+    // }, 30 * 60 * 1000);
+
+    const autenticatorToken = localStorage.getItem('access_token');
+    setToken(autenticatorToken!);
+
+    // return (() => {
+    //   clearInterval(intervalId)
+    //   // clearInterval(intervalId2)
+    // });
+    return () => clearInterval(intervalId);
 
   }, []);
 
+  async function fetchNewToken() {
+
+    const url = 'https://accounts.spotify.com/api/token';
+    const body = new URLSearchParams();
+    // body.append('grant_type', 'authorization_code');
+    // body.append('code', code);
+    // body.append('redirect_uri', 'SUA_URL_DE_REDIR');
+
+    const headers = {
+      'Authorization': `Basic ${btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers,
+        body: body.toString(),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro na solicitação de token de acesso');
+      }
+
+      const data = await response.json();
+      const accessToken = data.access_token;
+      return accessToken;
+    } catch (error) {
+      console.error('Erro ao obter token de acesso:', error);
+      throw error;
+    }
+  }
 
 
 
+
+
+  // async function getRecommendationGenres(token: string) {
+
+  //   console.log('entrou aqui')
+
+  //   const paramse = {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/x-www-form-urlencoded',
+  //       'Authorization': 'Bearer ' + token
+  //     },
+  //     // body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
+  //   };
+
+  //   const result = await fetch("https://api.spotify.com/v1/browse/categories", paramse);
+  //   console.log(result);
+  //   const data = await result.json();
+  //   console.log(data);
+  //   setGenres(data.categories.items);
+  //   console.log(data.categories.items);
+  // }
 
   async function getRecommendationGenres(token: string) {
 
-    console.log('entrou aqui')
 
-    const paramse = {
+    const params = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + token,
       },
-      // body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
     };
 
-    const result = await fetch("https://api.spotify.com/v1/browse/categories", paramse);
-    console.log(result);
-    const data = await result.json();
-    console.log(data);
-    setGenres(data.categories.items);
-    console.log(data.categories.items);
+    try {
+      const result = await fetch("https://api.spotify.com/v1/browse/categories", params);
+      if (!result.ok) {
+        throw new Error('Erro ao buscar dados');
+      }
+
+      const data = await result.json();
+      if (data && data.categories && data.categories.items) {
+        setGenres(data.categories.items);
+       
+      } else {
+        console.error('Dados inválidos retornados da API Spotify:', data);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar dados:', error);
+    }
   }
+
 
 
 
@@ -167,9 +252,10 @@ const Home = () => {
 
         <Recommendation />
       </div>
-      {/* <FooterMusic /> */}
+      <FooterMusic />
       <Footer activePage={"home"} />
     </div>
+
   );
 }
 

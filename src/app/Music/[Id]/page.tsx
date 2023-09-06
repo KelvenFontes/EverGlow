@@ -403,15 +403,15 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
 
           <div className="flex items-center space-x-4 pt-3">
 
-          {isFavorite === true ? (
-                <button onClick={handleAddToFavoritesWithToken} className="text-white">
-                  <FaPlus className="text-primary" /> {/* Ícone de coração */}
-                </button>
-              ) : (
-                <button onClick={handleAddToFavoritesWithToken} className="text-white">
-                  <FaPlus className="text-white" /> {/* Ícone de coração */}
-                </button>
-              )}
+            {isFavorite === true ? (
+              <button onClick={handleAddToFavoritesWithToken} className="text-white">
+                <FaPlus className="text-primary" /> {/* Ícone de coração */}
+              </button>
+            ) : (
+              <button onClick={handleAddToFavoritesWithToken} className="text-white">
+                <FaPlus className="text-white" /> {/* Ícone de coração */}
+              </button>
+            )}
 
             <button onClick={handleShuffle} className={`text-white ${isShuffling ? 'text-primary' : ''}`}>
               <FaRandom />
@@ -445,14 +445,14 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
             </button>
 
             {isFavorite === true ? (
-                <button onClick={handleAddToFavoritesWithToken} className="text-white">
-                  <FaHeart className="text-primary" /> {/* Ícone de coração */}
-                </button>
-              ) : (
-                <button onClick={handleAddToFavoritesWithToken} className="text-white">
-                  <FaHeart className="text-white" /> {/* Ícone de coração */}
-                </button>
-              )}
+              <button onClick={handleAddToFavoritesWithToken} className="text-white">
+                <FaHeart className="text-primary" /> {/* Ícone de coração */}
+              </button>
+            ) : (
+              <button onClick={handleAddToFavoritesWithToken} className="text-white">
+                <FaHeart className="text-white" /> {/* Ícone de coração */}
+              </button>
+            )}
           </div>
 
 
