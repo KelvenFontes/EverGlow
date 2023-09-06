@@ -1,5 +1,5 @@
 interface SpotifyPlaylist {
-  imageURL: string | StaticImport;
+  imageURL: string;
   collaborative: boolean;
   description: string;
   external_urls: {
