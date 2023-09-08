@@ -367,11 +367,8 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
 
         </div>
       ) : (
-        <div className="flex items-center">
-          <Image src='/icon.png' alt="Default Image" height={80} width={80} className="object-cover rounded-xl" />
-          <div className="ml-4">
-            <h3 className="text-lg text-gray-300 font-medium">No music playing</h3>
-          </div>
+        <div className="container flex flex-col items-center justify-center mt-52">
+          <div className="h-12 w-12 border-4 border-l-gray-200 border-r-gray-200 border-b-gray-200 border-t-primary animate-spin ease-linear rounded-full"></div>
         </div>
       )
       }

@@ -96,8 +96,11 @@ const MusicArtist = ({ params }: { params: { Id: string } }) => {
         <div className="bg-gradient-to-b h-32 from-primaryLight to-dark">
           <div className="pt-8 pb-3">
             <div className="flex items-center justify-around gap-10">
-              <BsArrowLeft className="text-gray-200 text-3xl cursor-pointer" style={customIconStyle} onClick={handleGoBack} />
+              <Link href={`/home`}>
+                <BsArrowLeft className="text-gray-200 text-3xl cursor-pointer" style={customIconStyle} />
+              </Link>
               <p className="text-white">From Playlist</p>
+
               <Link href={`/`}>
                 <BsThreeDotsVertical className="text-gray-200 text-3xl cursor-pointer" />
               </Link>
