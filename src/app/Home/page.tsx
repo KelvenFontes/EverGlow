@@ -24,6 +24,7 @@ const Home = () => {
   const [recommendedTracks, setRecommendedTracks] = useState<any[]>([]);
   const [recommendedTracksTop, setRecommendedTracksTop] = useState<any[]>([]);
   const [recommendedArtistsTop, setRecommendedArtistsTop] = useState<any[]>([]);
+  const [ profile, setProfile ] = useState<any[]>([]);
 
   const CLIENT_ID = "4baee310607f4f12b6e000a5299decb2";
   const CLIENT_SECRET = "44900cac48ed4114990e9f37c47f978f";
@@ -39,6 +40,7 @@ const Home = () => {
       getRecommendationGenres(tokenAccess!);
       getRecommendationTopixes(tokenAccess!)
       getRecommendationTopArtists(tokenAccess!)
+      getSpotifyProfile(tokenAccess!)
 
     } else if (hash != '') {
       const access_token = hash.substring(1).split("&")[0].split('=')[1]
@@ -48,12 +50,14 @@ const Home = () => {
       getRecommendationGenres(access_token!);
       getRecommendationTopixes(access_token!)
       getRecommendationTopArtists(access_token!)
+      getSpotifyProfile(access_token!)
     }
 
     getRecommendationGenres(token);
     getSpotifyRecommendations(token)
     getRecommendationTopixes(token)
     getRecommendationTopArtists(token)
+    getSpotifyProfile(token);
     const intervalId = setInterval(() => {
       try {
       } catch (error) {
@@ -170,7 +174,7 @@ const Home = () => {
       const data = await result.json();
       if (data && data.items) {
         setRecommendedArtistsTop(data.items);
-        
+
       } else {
         console.error('Dados inválidos retornados da API Spotify:', data);
       }
@@ -203,10 +207,37 @@ const Home = () => {
     }
   }
 
+  async function getSpotifyProfile(token: string) {
+
+    const apiUrl = `https://api.spotify.com/v1/me`;
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao obter recomendações do Spotify.');
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setProfile(data);
+    } catch (error) {
+      console.error('Erro ao fazer a solicitação:', error);
+    }
+  }
+
+
+
   return (
     <div className="flex flex-col min-h-screen bg-dark">
       <div className="bg-gradient-to-b from-primaryLight to-dark">
-        <Header />
+        <Header profile={profile}/>
       </div>
 
       <div className="flex-1 pb-40">
