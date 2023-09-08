@@ -1,36 +1,20 @@
 import CardContinueListening from "./CardContinueListening";
+import Image from "next/image";
 
-const ContinueListening = () => {
+interface ContinueListeningProps {
+  recommendedTracks: any;
+}
+
+const ContinueListening = ({ recommendedTracks }: ContinueListeningProps) => {
   return (
-    <div className="container mx-auto px-5 pt-2">
-      <h2 className="text-white text-lg font-semibold pb-5">Continue Listening</h2>
-      <div className="grid grid-cols-2 gap-2">
-        <CardContinueListening />
-        <CardContinueListening />
-        <CardContinueListening />
-        <CardContinueListening />
-        <CardContinueListening />
-        <CardContinueListening />
-        {/* <div>
-          <h1 className="text-white">coffee & jazz</h1>
+    <div className="container mx-auto pt-2 ">
+      <div className="flex items-center space-x-2 bg-darkLight h-12 rounded-md">
+        <div className="relative h-12 w-12">
+          <Image src={recommendedTracks.album.images[0].url} alt="logo" className="rounded-l-md" style={{ objectFit: 'cover' }} fill />
         </div>
-        <div>
-          <h1 className="text-white">coffee & jazz</h1>
-        </div>
-        <div>
-          <h1 className="text-white">coffee & jazz</h1>
-        </div>
-        <div>
-          <h1 className="text-white">coffee & jazz</h1>
-        </div>
-        <div>
-          <h1 className="text-white">coffee & jazz</h1>
-        </div>
-        <div>
-          <h1 className="text-white">coffee & jazz</h1>
-        </div>
-        <div></div> */}
+        <p className="text-gray-400 text-sm w-24 truncate overflow-hidden">{recommendedTracks.name}</p>
       </div>
+      {/* Outra coluna aqui, se necessário */}
     </div>
   );
 }

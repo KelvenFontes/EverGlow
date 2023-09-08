@@ -7,12 +7,21 @@ interface CardRecommendationProps {
 const CardRecommendation = ({ recommendedTracks }: CardRecommendationProps) => {
   return (
     <div className="flex items-center h-40 w-40 rounded-md">
-      <div className="relative h-40 w-40">
-        <Image src={recommendedTracks.album.images[0].url} alt="logo" className="rounded-md" style={{ objectFit: 'cover' }} fill />
-        {/* <Image src="/logo.png" alt="logo" className="rounded-md" style={{ objectFit: 'cover' }} fill /> */}
-        {/* <p className="text-black text-xl font-bold absolute top-3 left-6 right-0 bottom-0 flex">{recommendedTracks.name}</p> */}
-      </div>
+      <div>
+        <div className="relative h-40 w-40">
+          {recommendedTracks.album && (
+            <Image src={recommendedTracks.album.images[0].url} alt="logo" className="rounded-md hover:scale-105" style={{ objectFit: 'cover' }} fill />
+          )}
 
+          {recommendedTracks.images && (
+            <Image src={recommendedTracks.images[0].url} alt="logo" className="rounded-md hover:scale-105" style={{ objectFit: 'cover' }} fill />
+          )}
+
+
+
+        </div>
+        <p className="text-gray-400 w-40 truncate overflow-hidden">{recommendedTracks.name}</p>
+      </div>
     </div>
   );
 }

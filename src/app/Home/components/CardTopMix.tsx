@@ -6,10 +6,24 @@ interface CardTopMixesProps {
 
 const CardTopMix = ({ category }: CardTopMixesProps) => {
   return (
-    <div className="flex items-center h-32 w-32 rounded-md">
-      <div className="relative h-32 w-32">
-        <Image src={category.icons[0].url} alt="logo" className="rounded-md" style={{ objectFit: 'cover' }} fill />
-        <p className="text-gray-100 text-sm font-bold absolute top-2 left-4 right-0 bottom-0 flex">{category.name}</p>
+    <div className="flex items-center h-44 w-32 rounded-md">
+      <div>
+        <div className="relative h-32 w-32">
+          {category.icons && (
+
+            <Image src={category.icons[0].url} alt="logo" className="rounded-md" style={{ objectFit: 'cover' }} fill />
+          )}
+
+          {category.images && (
+            <Image src={category.images[0].url} alt="logo" className="rounded-md" style={{ objectFit: 'cover' }} fill />
+          )}
+
+          {category.album && (
+            <Image src={category.album.images[0].url} alt="logo" className="rounded-md" style={{ objectFit: 'cover' }} fill />
+          )}
+
+        </div>
+        <p className="text-gray-400 w-32 truncate overflow-hidden">{category.name}</p>
       </div>
     </div>
   );

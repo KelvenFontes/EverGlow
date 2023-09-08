@@ -1,4 +1,6 @@
 interface SpotifyCategory {
+  album: any;
+  images: any;
   id: null | undefined;
   icons: any;
   href: string;

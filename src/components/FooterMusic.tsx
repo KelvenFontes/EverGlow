@@ -78,14 +78,14 @@ const FooterMusic = () => {
       return;
     } else {
       const response = await fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${musicId}`, {
-        // method: 'GET',
+
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
 
       const data = await response.json();
-
+      console.log(data);
       setIsFavorite(data[0]);
 
 
@@ -96,7 +96,7 @@ const FooterMusic = () => {
   const handleAddToFavoritesWithToken = async () => {
     try {
       if (isFavorite) {
-        // Remover da biblioteca do usuário (desfavoritar)
+
         const response = await fetch(`https://api.spotify.com/v1/me/tracks?ids=${musicId}`, {
           method: 'DELETE',
           headers: {
@@ -108,7 +108,7 @@ const FooterMusic = () => {
           setIsFavorite(false);
         }
       } else {
-        // Adicionar à biblioteca do usuário (favoritar)
+
         const response = await fetch(`https://api.spotify.com/v1/me/tracks?ids=${musicId}`, {
           method: 'PUT',
           headers: {
@@ -187,11 +187,11 @@ const FooterMusic = () => {
 
                 <div className="ml-4 flex-1 w-64">
                   <h3 className="text-lg text-gray-300 font-medium">{musicPlaying.name}</h3>
+                  <p className="text-lg text-gray-400 font-medium -mt-1">{musicPlaying.artists[0].name}</p>
                 </div>
               </div>
             </Link>
 
-            {/* Coração e Play/Pause à direita */}
             <div className="flex items-center gap-4 pr-5 pb-1">
 
               {isFavorite == true ? (
@@ -205,21 +205,16 @@ const FooterMusic = () => {
               )}
 
               {isPlaying ? (
-                // <div className="flex items-center justify-center h-8 w-8 rounded-full bg-gradient-to-br from-primary to-primary-dark shadow-2xl">
                 <button onClick={handlePause}>
                   <FaPlay color="#fff" size={24} />
                 </button>
-                // </div>
               ) : (
-                // <div className="flex items-center justify-center h-8 w-8 rounded-full bg-gradient-to-br from-primary to-primary-dark shadow-2xl">
                 <button onClick={handlePlay}>
                   <FaPause color="#fff" size={24} />
                 </button>
-                // </div>
               )}
             </div>
 
-            {/* Barra de Progresso */}
             <div className="bg-gray-100 w-[95%] h-[0.3rem] rounded-full fixed bottom-20 left-[2.5%] right-[2.5%]">
               <div className="bg-primary h-full rounded-full" style={{ width: `${(musicProgress! / musicPlaying.duration_ms) * 100}%` }}></div>
             </div>
