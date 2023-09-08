@@ -8,9 +8,10 @@ import { BsArrowLeft, BsThreeDotsVertical } from "react-icons/bs";
 
 interface HeaderProps {
   musicId: string;
+  openModal: () => void;
 }
 
-const Header = ({musicId}:HeaderProps) => {
+const Header = ({musicId, openModal}:HeaderProps) => {
 
   const customIconStyle = {
     strokeWidth: '1', // Ajuste o valor para alterar a espessura da linha
@@ -25,9 +26,9 @@ const Header = ({musicId}:HeaderProps) => {
       <div className="flex items-center justify-around gap-10">
         <BsArrowLeft className="text-gray-200 text-3xl cursor-pointer" style={customIconStyle} onClick={handleGoBack} />
         <p className="text-white">From Playlist</p>
-        <Link href={`/Music/${musicId}/settings`}>
-          <BsThreeDotsVertical className="text-gray-200 text-3xl cursor-pointer" />
-        </Link>
+        {/* <Link href={`/Music/${musicId}/settings`}> */}
+          <BsThreeDotsVertical className="text-gray-200 text-3xl cursor-pointer" onClick={openModal}/>
+        {/* </Link> */}
       </div>
     </div>
   );

@@ -1,11 +1,14 @@
 'use client'
 
 import { FaStepBackward, FaPause, FaPlay, FaStepForward, FaRedo, FaRandom, FaHeart, FaPlus } from 'react-icons/fa';
+import { FaTrash, FaTags, FaUser, FaCompactDisc, FaInfoCircle, FaShare } from 'react-icons/fa';
+
 import Header from "./components/Header";
 import { useEffect, useState } from "react";
 import Image from 'next/image';
 
 import './TextAnimation.css';
+import { BsArrowLeft } from 'react-icons/bs';
 
 const MusicById = ({ params }: { params: { Id: string } }) => {
 
@@ -20,6 +23,7 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [musicDuration, setMusicDuration] = useState(0);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
 
@@ -278,11 +282,19 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
 
   return (
     <div className="container mx-auto min-h-screen flex flex-col bg-dark">
       <div className="bg-gradient-to-b from-primaryLight to-dark" >
-        <Header musicId={musicId} />
+        <Header musicId={musicId} openModal={openModal} />
       </div >
 
       {musicPlaying && musicPlaying.album && musicPlaying.album.images && musicPlaying.album.images.length > 0 ? (
@@ -364,6 +376,81 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
               </button>
             )}
           </div>
+
+          {isModalOpen && (
+            <div className="fixed inset-0 flex items-center justify-center z-50 -mx-3">
+              <div className="w-full p-4 rounded-lg shadow-lg">
+
+                <div className="container mx-auto h-auto flex flex-col bg-dark border border-gray-400">
+                  <div className="pt-5 pb-3">
+                    <div className="flex items-center justify-start pl-5 gap-48">
+                      <BsArrowLeft
+                        className="text-gray-200 text-3xl cursor-pointer arrow-left-icon"
+
+                        onClick={closeModal}
+                      />
+
+                    </div>
+                  </div>
+
+                  <div className="h-screen flex flex-col flex-1 justify-end px-5 mb-10">
+
+                    <ul className="text-white list-none p-0">
+                      <li className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                          <FaPlus className="mr-2" />
+                          <span className="text-lg">Add to playlist</span>
+                        </div>
+                      </li>
+                      <li className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                          <FaPlay className="mr-2" />
+                          <span className="text-lg">Add to queue</span>
+                        </div>
+                      </li>
+                      <li className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                          <FaTrash className="mr-2" />
+                          <span className="text-lg">Remove from playlist</span>
+                        </div>
+                      </li>
+                      <li className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                          <FaTags className="mr-2" />
+                          <span className="text-lg">Modify tags</span>
+                        </div>
+                      </li>
+                      <li className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                          <FaUser className="mr-2" />
+                          <span className="text-lg">View artist</span>
+                        </div>
+                      </li>
+                      <li className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                          <FaCompactDisc className="mr-2" />
+                          <span className="text-lg">View album</span>
+                        </div>
+                      </li>
+                      <li className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                          <FaInfoCircle className="mr-2" />
+                          <span className="text-lg">Show Credits</span>
+                        </div>
+                      </li>
+                      <li className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                          <FaShare className="mr-2" />
+                          <span className="text-lg">Share</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+                </div >
+              </div>
+            </div>
+          )}
 
         </div>
       ) : (
