@@ -16,7 +16,7 @@ export default function Home() {
           From the <span className="text-primary">latest</span> to the
           <span className="text-primary"> greatest</span> hits,
           play your favorite tracks on
-          <span className="text-primary"> musium</span> now!
+          <span className="text-primary"> EverGlow</span> now!
         </p>
         <Button className="text-xl"><Link href='/Signin'>Get Started</Link></Button>
       </div>

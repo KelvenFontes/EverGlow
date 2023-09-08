@@ -297,16 +297,25 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
         <Header musicId={musicId} openModal={openModal} />
       </div >
 
-      {musicPlaying && musicPlaying.album && musicPlaying.album.images && musicPlaying.album.images.length > 0 ? (
+      {musicPlaying ? (
         <div className="flex flex-col items-center justify-center mt-10">
-          <Image src={musicPlaying.album.images[0].url} alt={musicPlaying.name} height={252} width={263} className="mt-8" />
+          {musicPlaying.album && musicPlaying.album.images && musicPlaying.album.images.length > 0 ? (
+            <Image src={musicPlaying.album.images[0].url} alt={musicPlaying.name} height={252} width={263} className="mt-8" loading="lazy" />
+          ) : (
+            <div className="container flex flex-col items-center justify-center mt-52">
+              <div className="h-12 w-12 border-4 border-l-gray-200 border-r-gray-200 border-b-gray-200 border-t-primary animate-spin ease-linear rounded-full"></div>
+            </div>
+          )}
+          {/* <Image src={musicPlaying.album.images[0].url} alt={musicPlaying.name} height={252} width={263} className="mt-8" loading="lazy"/> */}
           <div className="flex items-center justify-start w-[263px]">
             <div className="">
               <h3 className="text-lg text-gray-200 font-medium">{musicPlaying.name}</h3>
               <div className="text-animation-container">
-                <div className="text-animation text-md text-gray-500">
-                  {musicPlaying.album.name}
-                </div>
+                {musicPlaying && musicPlaying.album ? (
+                  <div className="text-animation text-md text-gray-500">
+                    <p>{musicPlaying.album.name}</p>
+                  </div>
+                ) : null}
               </div>
             </div>
 
@@ -325,15 +334,19 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
 
           <div className="flex items-center space-x-4 pt-3">
 
-            {isFavorite === true ? (
-              <button onClick={handleAddToFavoritesWithToken} className="text-white">
+            {/* {isFavorite === true ? (
+              <button className="text-white">
                 <FaPlus className="text-primary" />
               </button>
             ) : (
-              <button onClick={handleAddToFavoritesWithToken} className="text-white">
+              <button className="text-white">
                 <FaPlus className="text-white" />
               </button>
-            )}
+            )} */}
+
+            <button className="text-white">
+              <FaPlus className="text-white" />
+            </button>
 
             <button onClick={handleShuffle} className={`text-white ${isShuffling ? 'text-primary' : ''}`}>
               <FaRandom />
@@ -446,7 +459,6 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
                       </li>
                     </ul>
                   </div>
-
                 </div >
               </div>
             </div>
@@ -457,11 +469,8 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
         <div className="container flex flex-col items-center justify-center mt-52">
           <div className="h-12 w-12 border-4 border-l-gray-200 border-r-gray-200 border-b-gray-200 border-t-primary animate-spin ease-linear rounded-full"></div>
         </div>
-      )
-      }
-
+      )}
     </div >
-
   );
 }
 

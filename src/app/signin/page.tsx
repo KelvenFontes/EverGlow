@@ -15,7 +15,7 @@ const Signin = () => {
 
   const handleLoginClick = () => {
     // signIn();
-    const clientId = "137652e6f42346d08d7f665bad0dac79";
+    const clientId = "c31682f453d342c7a7ebfb81009c987c";
     const redirectUrl = "http://localhost:3000/Home";
     const apiUrl = "https://accounts.spotify.com/authorize";
     const scope = [

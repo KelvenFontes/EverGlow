@@ -26,7 +26,7 @@ const Home = () => {
   const [recommendedArtistsTop, setRecommendedArtistsTop] = useState<any[]>([]);
   const [ profile, setProfile ] = useState<any[]>([]);
 
-  const CLIENT_ID = "4baee310607f4f12b6e000a5299decb2";
+  const CLIENT_ID = "c31682f453d342c7a7ebfb81009c987c";
   const CLIENT_SECRET = "44900cac48ed4114990e9f37c47f978f";
 
   const limit = 10;
