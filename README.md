@@ -9,8 +9,12 @@ npm run dev
 # or
 yarn dev
 # or
+
+
 pnpm dev
 ```
+
+![EverGlow](https://github.com/KelvenFontes/EverGlow/assets/69438619/6c7dbfe6-b3ad-4d20-baf5-4ec865ec8bfb)
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
