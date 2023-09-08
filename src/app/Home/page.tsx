@@ -142,8 +142,6 @@ const Home = () => {
 
       const data = await result.json();
       if (data && data.items) {
-        // setGenres();
-        console.log(data.items);
         setRecommendedTracksTop(data.items);
 
       } else {
@@ -171,10 +169,8 @@ const Home = () => {
 
       const data = await result.json();
       if (data && data.items) {
-        // setGenres();
-        console.log(data.items);
         setRecommendedArtistsTop(data.items);
-
+        
       } else {
         console.error('Dados inválidos retornados da API Spotify:', data);
       }
@@ -202,7 +198,6 @@ const Home = () => {
 
       const data = await response.json();
       setRecommendedTracks(data.tracks);
-      console.log(data.tracks)
     } catch (error) {
       console.error('Erro ao fazer a solicitação:', error);
     }
@@ -230,9 +225,8 @@ const Home = () => {
           <div className="w-full overflow-x-auto lg:flex lg:items-center lg:justify-center">
             <div className="flex space-x-6 lg:space-x-4 lg:px-0">
               {recommendedTracksTop.map((genre: SpotifyCategory, i: number) => (
-                <div key={genre.id} className="flex-shrink-0">
+                <div key={genre.id}>
                   <Link href={`/Music/${genre.id}`}>
-
                     <CardTopMix category={genre} />
                   </Link>
                 </div>
@@ -261,7 +255,7 @@ const Home = () => {
       </div>
       <FooterMusic />
       <Footer activePage={"home"} />
-    </div>
+    </div >
 
   );
 }

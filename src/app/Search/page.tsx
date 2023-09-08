@@ -14,6 +14,7 @@ import FooterMusic from "@/components/FooterMusic";
 const Search = () => {
 
   const [access_token, setToken] = useState<string | null>('');
+  const [albums, setAlbums] = useState<any>([]);
   const [search, setSearch] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -33,8 +34,36 @@ const Search = () => {
 
     const token = localStorage.getItem('access_token');
     setToken(token);
+    getAlbums(token!);
 
   }, [])
+
+
+
+  async function getAlbums(token: string) {
+
+    const apiUrl = `https://api.spotify.com/v1/browse/categories`;
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao obter recomendações do Spotify.');
+      }
+
+      const data = await response.json();
+      setAlbums(data);
+      console.log(data)
+    } catch (error) {
+      console.error('Erro ao fazer a solicitação:', error);
+    }
+  }
 
   async function getSearch() {
 

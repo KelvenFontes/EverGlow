@@ -5,22 +5,14 @@ import Header from "./components/Header";
 import { useEffect, useState } from "react";
 import Image from 'next/image';
 
-import './TextAnimation.css'; // Importe o arquivo CSS
-
-// import { useSpring } from 'react-spring';
-
-
-// import { useSpring, animated, SpringValue, SpringConfig, SpringUpdateFn } from 'react-spring';
-
+import './TextAnimation.css';
 
 const MusicById = ({ params }: { params: { Id: string } }) => {
-
 
   const [token, setToken] = useState<string>('');
   const [device, setDevice] = useState([]);
   const [musicPlaying, setMusicPlaying] = useState<any[] | any | null | undefined>([]);
   const musicId = params.Id;
-  // const [ musicId, setMusicId ] = useState(params.Id);
   const [currentMusicId, setCurrentMusicId] = useState(params.Id)
   const [musicProgress, setMusicProgress] = useState<number | undefined>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -29,29 +21,9 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
   const [musicDuration, setMusicDuration] = useState(0);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
-  // const [isMovingRight, setIsMovingRight] = useState(true);
-
-
-
-  // const textStyles: React.CSSProperties = {
-  //   whiteSpace: 'nowrap',
-  //   animation: 'move 10s linear infinite',
-  // };
-
-  // if (isMovingRight) {
-  //   textStyles.transform = 'translateX(100%)';
-  //   textStyles.opacity = 0;
-  // } else {
-  //   textStyles.transform = 'translateX(-100%)';
-  //   textStyles.opacity = 1;
-  // }
-
-
   useEffect(() => {
 
     const autenticator_token = localStorage.getItem('access_token');
-
-
 
     if (autenticator_token != '') {
       setToken(autenticator_token!);
@@ -61,28 +33,12 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
 
       getMusic(autenticator_token!)
       checkIfMusicIsInFavorites(autenticator_token!);
-      // toggleFavorite(autenticator_token!);
-
-
-
 
       const intervalId = setInterval(() => {
         getMusicPlaying(autenticator_token!);
         checkIfMusicIsInFavorites(autenticator_token!);
 
-        // const currentId = window.location.pathname.split("/").pop();
-
-        // Verifique se o ID atual é igual ao ID desejado
-
-
-      }, 1000); // Atualiza a cada segundo (você pode ajustar o intervalo conforme necessário)
-
-      // Limpa o intervalo quando o componente é desmontado
-
-
-
-      // return () => clearInterval(interval);
-
+      }, 1000);
 
       return () => clearInterval(intervalId);
     } else {
@@ -97,10 +53,7 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
       }, 5000)
     }
 
-
-
   }, []);
-
 
   async function getMusicPlaying(token: string) {
     const params = {
@@ -113,7 +66,6 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
     const data = await result.json();
 
     if (data && data.item) {
-      // Acesse progress_ms e duration_ms dentro de data.item
       const progressMs = data.progress_ms;
       const durationMs = data.item.duration_ms;
 
@@ -122,31 +74,14 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
 
       setMusicPlaying(data.item);
       setMusicProgress(progressMs);
-      setMusicDuration(durationMs); // Define a duração da música
-      setCurrentTime(progressMs); // Define o tempo atual
-
-      // console.log(data);
-      // console.log(progressMs);
-
-      // if (data.item && data.item.external_urls && data.item.external_urls.spotify) {
-      //   // Acesse o URL do vídeo da faixa atualmente em reprodução
-      //   const videoUrl = data.item.external_urls.spotify;
-      //   console.log(videoUrl);
-
-      // } else {
-      //   console.error('A faixa atualmente em reprodução não possui informações de vídeo.');
-
-      // }
-
-
+      setMusicDuration(durationMs);
+      setCurrentTime(progressMs);
 
     } else {
-      // Lide com o caso em que não há música em reprodução no momento
+
       console.log("Nenhuma música em reprodução no momento.");
     }
   }
-
-
 
   async function getMusic(token: String) {
     const params = {
@@ -157,18 +92,10 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
     };
     const result = await fetch(`https://api.spotify.com/v1/tracks/${musicId}`, params);
     const data = await result.json();
-    // setDevice(data.device);
-    console.log(data);
-    console.log(result);
   }
-
-
-
-
 
   const checkIfMusicIsInFavorites = async (token: string) => {
     const response = await fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${musicId}`, {
-      // method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -181,7 +108,7 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
   const handleAddToFavoritesWithToken = async () => {
     try {
       if (isFavorite) {
-        // Remover da biblioteca do usuário (desfavoritar)
+
         const response = await fetch(`https://api.spotify.com/v1/me/tracks?ids=${musicId}`, {
           method: 'DELETE',
           headers: {
@@ -193,7 +120,7 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
           setIsFavorite(false);
         }
       } else {
-        // Adicionar à biblioteca do usuário (favoritar)
+
         const response = await fetch(`https://api.spotify.com/v1/me/tracks?ids=${musicId}`, {
           method: 'PUT',
           headers: {
@@ -209,12 +136,6 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
       console.error('Erro ao adicionar/remover dos favoritos:', error);
     }
   };
-
-
-
-
-
-
 
   async function getDevice(token: String) {
     const params = {
@@ -311,7 +232,7 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          uris: [`spotify:track:${musicId}`], // Substitua pelo ID da faixa que você deseja reproduzir
+          uris: [`spotify:track:${musicId}`],
           position_ms: musicProgress
         }),
       });
@@ -346,10 +267,8 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
   };
 
   const handleShuffle = () => {
-    // Lógica para alternar entre os modos de reprodução aleatória
     setIsShuffling((prevState) => !prevState);
   };
-  // setIsPlaying(false);
 
   const formatTime = (milliseconds: number) => {
     const totalSeconds = Math.floor(milliseconds / 1000);
@@ -367,7 +286,7 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
       </div >
 
       {musicPlaying && musicPlaying.album && musicPlaying.album.images && musicPlaying.album.images.length > 0 ? (
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center mt-10">
           <Image src={musicPlaying.album.images[0].url} alt={musicPlaying.name} height={252} width={263} className="mt-8" />
           <div className="flex items-center justify-start w-[263px]">
             <div className="">
@@ -382,9 +301,7 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
 
           </div>
 
-          {/* Barra de Progresso */}
-
-          <div className="flex items-center justify-center w-[80%] gap-3 mt-2">
+          <div className="flex items-center justify-center w-[80%] gap-3 mt-10">
             <span className='text-white text-sm'>{formatTime(musicProgress!)}</span>
             <div className="bg-gray-100 w-[80%] h-[0.4rem] relative rounded-full">
               <div className="bg-primary h-full rounded-full" style={{ width: `${(musicProgress! / musicPlaying.duration_ms) * 100}%` }}>
@@ -394,22 +311,15 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
             <span className='text-white text-sm'>{formatTime(musicPlaying.duration_ms)}</span>
           </div>
 
-
-
-
-
-
-
-
           <div className="flex items-center space-x-4 pt-3">
 
             {isFavorite === true ? (
               <button onClick={handleAddToFavoritesWithToken} className="text-white">
-                <FaPlus className="text-primary" /> {/* Ícone de coração */}
+                <FaPlus className="text-primary" />
               </button>
             ) : (
               <button onClick={handleAddToFavoritesWithToken} className="text-white">
-                <FaPlus className="text-white" /> {/* Ícone de coração */}
+                <FaPlus className="text-white" />
               </button>
             )}
 
@@ -446,15 +356,14 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
 
             {isFavorite === true ? (
               <button onClick={handleAddToFavoritesWithToken} className="text-white">
-                <FaHeart className="text-primary" /> {/* Ícone de coração */}
+                <FaHeart className="text-primary" />
               </button>
             ) : (
               <button onClick={handleAddToFavoritesWithToken} className="text-white">
-                <FaHeart className="text-white" /> {/* Ícone de coração */}
+                <FaHeart className="text-white" />
               </button>
             )}
           </div>
-
 
         </div>
       ) : (
@@ -474,8 +383,8 @@ const MusicById = ({ params }: { params: { Id: string } }) => {
 
 export default MusicById;
 function useSpring(arg0: {
-  from: { transform: string; }; to: { transform: string; }; config: { duration: number; }; // Ajuste a duração da animação conforme necessário
-  reset: boolean; // Reinicie a animação quando terminar
+  from: { transform: string; }; to: { transform: string; }; config: { duration: number; };
+  reset: boolean;
   reverse: boolean;
 }) {
   throw new Error('Function not implemented.');

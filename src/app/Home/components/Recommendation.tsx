@@ -16,21 +16,13 @@ const Recommendation = ({ recommendedTracks }: RecommendationProps) => {
         <div className="relative flex items-center lg:justify-center">
           <div className="w-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide lg:flex lg:items-center lg:justify-center">
 
-
-
-
             {recommendedTracks.map((track, index) => (
               <div className="inline-block cursor-pointer pr-6 transform transition-transform" key={index}>
-
-
-                    <CardRecommendation recommendedTracks={track}  />
-
-
-
+                <Link href={`/Music/artist/${track.id}`}>
+                  <CardRecommendation recommendedTracks={track} />
+                </Link>
               </div>
             ))}
-
-
 
           </div>
         </div>

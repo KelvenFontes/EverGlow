@@ -97,7 +97,7 @@ const Library = () => {
         <Header />
       </div>
 
-      <div className="relative flex items-center pt-8 px-5 lg:justify-center ">
+      <div className="relative flex items-center pt-8 px-5 lg:justify-center">
         <div className="w-full overflow-x-hidden scrollbar-hide whitespace-no-wrap">
           <div className="flex space-x-4">
             {categories.map((category: SpotifyCategoryItem, i: number) => (
@@ -109,13 +109,13 @@ const Library = () => {
         </div>
       </div>
 
-      <div className="px-5 pt-8">
+      <div className="px-5 pt-8 pb-6">
         <h3 className="text-primary font-semibold text-lg tracking-widest">Recently played</h3>
       </div>
 
       {playlists.map((playlist) => (
 
-        <div key={playlist.id}>
+        <div key={playlist.id} className="px-5">
           <Link href={`/Music/playlist/${playlist.id!}`}>
             <CardPlaylist playlist={playlist} />
           </Link>

@@ -14,6 +14,8 @@ interface SpotifyCategory {
 }
 
 interface SpotifyCategoryItem {
+  album: any;
+  albums: any;
   map(arg0: () => any): unknown;
   images: any;
   imageURL: string;
