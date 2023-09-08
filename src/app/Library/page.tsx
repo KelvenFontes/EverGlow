@@ -98,7 +98,7 @@ const Library = () => {
       </div>
 
       <div className="relative flex items-center pt-8 px-5 lg:justify-center">
-        <div className="w-full overflow-x-hidden scrollbar-hide whitespace-no-wrap">
+        <div className="w-full overflow-x-scroll scrollbar-hide whitespace-no-wrap">
           <div className="flex space-x-4">
             {categories.map((category: SpotifyCategoryItem, i: number) => (
               <div key={category.id}>

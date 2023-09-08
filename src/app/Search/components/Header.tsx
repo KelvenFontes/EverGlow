@@ -58,16 +58,16 @@ const Header = ({ search, setSearch, selectedCategory, setSelectedCategory, getS
                 }`}
               onClick={() => handleCategorySelect("artist")}
             >
-              <FaMicrophone size={20} />
-              <span className="text-xs">Artist</span>
+              <FaMicrophone size={20} onClick={handleSearch} />
+              <span className="text-xs" onClick={handleSearch}>Artist</span>
             </div>
             <div
               className={`flex flex-col items-center gap-2 cursor-pointer mx-2 ${selectedCategory === "playlist" ? "text-primary" : "text-white"
                 }`}
               onClick={() => handleCategorySelect("playlist")}
             >
-              <FaList size={20} />
-              <span className="text-xs">Playlist</span>
+              <FaList size={20} onClick={handleSearch} />
+              <span className="text-xs" onClick={handleSearch}>Playlist</span>
             </div>
 
             <div
@@ -75,32 +75,32 @@ const Header = ({ search, setSearch, selectedCategory, setSelectedCategory, getS
                 }`}
               onClick={() => handleCategorySelect("track")}
             >
-              <FaPlay size={20} />
-              <span className="text-xs">Track</span>
+              <FaPlay size={20} onClick={handleSearch} />
+              <span className="text-xs" onClick={handleSearch}>Track</span>
             </div>
             <div
               className={`flex flex-col items-center gap-2 cursor-pointer mx-2 ${selectedCategory === "show" ? "text-primary" : "text-white"
                 }`}
               onClick={() => handleCategorySelect("show")}
             >
-              <FaTv size={20} />
-              <span className="text-xs">Show</span>
+              <FaTv size={20} onClick={handleSearch} />
+              <span className="text-xs" onClick={handleSearch}>Show</span>
             </div>
             <div
               className={`flex flex-col items-center gap-2 cursor-pointer mx-2 ${selectedCategory === "episode" ? "text-primary" : "text-white"
                 }`}
               onClick={() => handleCategorySelect("episode")}
             >
-              <FaHeadphones size={20} />
-              <span className="text-xs">Episode</span>
+              <FaHeadphones size={20} onClick={handleSearch} />
+              <span className="text-xs" onClick={handleSearch}>Episode</span>
             </div>
             <div
               className={`flex flex-col items-center gap-2 cursor-pointer mx-2 ${selectedCategory === "audioBook" ? "text-primary" : "text-white"
                 }`}
               onClick={() => handleCategorySelect("audioBook")}
             >
-              <FaBook size={20} />
-              <span className="text-xs">AudioBook</span>
+              <FaBook size={20} onClick={handleSearch} />
+              <span className="text-xs" onClick={handleSearch}>AudioBook</span>
             </div>
 
           </div>

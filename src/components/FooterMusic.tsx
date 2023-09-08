@@ -171,7 +171,7 @@ const FooterMusic = () => {
   return (
     <>
       {musicPlaying && musicPlaying.album && musicPlaying.album.images && musicPlaying.album.images.length > 0 ? (
-        <div className="grid grid-cols-4 fixed bottom-20 left-0 right-0 h-[4.2rem] bg-gradient-to-b from-primary to-dark rounded-t-xl">
+        <div className="grid grid-cols-4 fixed bottom-16 left-0 right-0 h-[4.2rem] bg-gradient-to-b from-primary to-dark rounded-t-xl">
 
           <div className="col-span-4 flex items-center w-full pl-2">
 
@@ -215,7 +215,7 @@ const FooterMusic = () => {
               )}
             </div>
 
-            <div className="bg-gray-100 w-[95%] h-[0.3rem] rounded-full fixed bottom-20 left-[2.5%] right-[2.5%]">
+            <div className="bg-gray-100 w-[95%] h-[0.3rem] rounded-full fixed bottom-16 left-[2.5%] right-[2.5%]">
               <div className="bg-primary h-full rounded-full" style={{ width: `${(musicProgress! / musicPlaying.duration_ms) * 100}%` }}></div>
             </div>
           </div>

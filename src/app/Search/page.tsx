@@ -10,6 +10,7 @@ import Image from "next/image";
 import SearchResultsArtist from "./components/SearchResultsArtist";
 import SearchResults from "./components/SearchResults";
 import FooterMusic from "@/components/FooterMusic";
+import Link from "next/link";
 
 const Search = () => {
 
@@ -27,8 +28,6 @@ const Search = () => {
     episodes: [],
     audioBooks: []
   });
-
-
 
   useEffect(() => {
 
@@ -208,7 +207,9 @@ const Search = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
             {searchResults.albums.map((album: SpotifyCategoryItem) => (
               <div key={album.id} className="shadow-lg rounded-lg overflow-hidden">
-                <SearchResults result={album} />
+                <Link href={`/Music/artist/albums/${album.id}`}>
+                  <SearchResults result={album} />
+                </Link>
               </div>
             ))}
           </div>
@@ -276,7 +277,7 @@ const Search = () => {
 
         {Object.values(searchResults).every(result => result.length === 0) && (
           <>
-            <TopGenres />
+            {/* <TopGenres /> */}
             <BrowseAll />
           </>
         )}
