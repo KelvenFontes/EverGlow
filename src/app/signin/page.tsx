@@ -95,7 +95,7 @@ const Signin = () => {
        <div className='hidden lg:block border-r border-white h-72 mx-8'></div>
 
       <div className='lg:w-1/2 flex flex-col items-center justify-center gap-6 p-6'>
-        <h2 className='text-white font-semibold text-4xl md:text-5xl lg:text-4xl'>Let's get you in</h2>
+        <h2 className='text-white font-semibold text-4xl md:text-5xl lg:text-4xl'>Let s get you in</h2>
         {/* Continue with Spotify */}
         <Button className='flex align-center justify-start pl-10 gap-5 text-sm font-semibold w-full md:w-72 lg:w-[350px] lg:pl-20' variant='dark' onClick={handleLoginClick}>
           <BsSpotify className='text-green-400' size={22} />
@@ -126,7 +126,7 @@ const Signin = () => {
             Login with a Password
           </Button>
           <p className='text-white'>
-            Don't have an account? <Link href='/signup' className='text-primary'>Sign Up</Link>
+            Don t have an account? <Link href='/signup' className='text-primary'>Sign Up</Link>
           </p>
         </div>
       </div>
