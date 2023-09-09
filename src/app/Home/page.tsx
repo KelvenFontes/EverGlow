@@ -24,7 +24,7 @@ const Home = () => {
   const [recommendedTracks, setRecommendedTracks] = useState<any[]>([]);
   const [recommendedTracksTop, setRecommendedTracksTop] = useState<any[]>([]);
   const [recommendedArtistsTop, setRecommendedArtistsTop] = useState<any[]>([]);
-  const [ profile, setProfile ] = useState<any[]>([]);
+  const [profile, setProfile] = useState<any[]>([]);
 
   const CLIENT_ID = "c31682f453d342c7a7ebfb81009c987c";
   const CLIENT_SECRET = "44900cac48ed4114990e9f37c47f978f";
@@ -232,12 +232,10 @@ const Home = () => {
     }
   }
 
-
-
   return (
     <div className="flex flex-col min-h-screen bg-dark">
       <div className="bg-gradient-to-b from-primaryLight to-dark">
-        <Header profile={profile}/>
+        <Header profile={profile} />
       </div>
 
       <div className="flex-1 pb-40">

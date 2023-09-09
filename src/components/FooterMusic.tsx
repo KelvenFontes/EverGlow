@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from 'next/image';
 import Link from "next/link";
-import { FaPlay, FaHeart, FaPause } from "react-icons/fa";
+import { FaPlay, FaHeart, FaPause, FaStepBackward, FaStepForward, FaRandom, FaRedo, FaMicrophone, FaVolumeUp, FaList, FaExpand, FaSpeakerDeck } from "react-icons/fa";
 
 const FooterMusic = () => {
 
@@ -167,42 +167,130 @@ const FooterMusic = () => {
     }
   };
 
+  const formatTime = (milliseconds: number) => {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  };
+
 
   return (
     <>
       {musicPlaying && musicPlaying.album && musicPlaying.album.images && musicPlaying.album.images.length > 0 ? (
-        <div className="grid grid-cols-4 fixed bottom-16 left-0 right-0 h-[4.2rem] bg-gradient-to-b from-primary to-dark rounded-t-xl">
+        <>
+          <div className="grid grid-cols-4 fixed bottom-16 left-0 right-0 h-[4.2rem] bg-gradient-to-b from-primary to-dark rounded-t-xl lg:hidden">
+            <div className="col-span-4 flex items-center w-full pl-2">
+              <Link href={`/Music/${musicPlaying.id}`}>
+                <div className="flex items-center">
+                  <Image
+                    src={musicPlaying.album.images[0].url}
+                    alt={musicPlaying.name}
+                    width={50}
+                    height={50}
+                    className="object-cover rounded-xl"
+                  />
+                  <div className="ml-4 flex-1 w-64">
+                    <h3 className="text-lg text-gray-300 font-medium">{musicPlaying.name}</h3>
+                    <p className="text-lg text-gray-400 font-medium -mt-1">{musicPlaying.artists[0].name}</p>
+                  </div>
+                </div>
+              </Link>
+              <div className="flex items-center gap-4 pr-5 pb-1">
+                {isFavorite == true ? (
+                  <button onClick={handleAddToFavoritesWithToken} className="text-primary">
+                    <FaHeart className="text-primary" size={24} />
+                  </button>
+                ) : (
+                  <button onClick={handleAddToFavoritesWithToken} className="text-white">
+                    <FaHeart className="text-white" size={24} />
+                  </button>
+                )}
+                {isPlaying ? (
+                  <button onClick={handlePause}>
+                    <FaPlay color="#fff" size={24} />
+                  </button>
+                ) : (
+                  <button onClick={handlePlay}>
+                    <FaPause color="#fff" size={24} />
+                  </button>
+                )}
+              </div>
+              <div className="bg-gray-100 w-[95%] h-[0.3rem] rounded-full fixed bottom-16 left-[2.5%] right-[2.5%]">
+                <div className="bg-primary h-full rounded-full" style={{ width: `${(musicProgress! / musicPlaying.duration_ms) * 100}%` }}></div>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
 
-          <div className="col-span-4 flex items-center w-full pl-2">
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div className="hidden lg:flex lg:fixed lg:inset-x-0 lg:bottom-0 lg:h-20 lg:bg-gradient-to-b lg:from-primary lg:to-dark lg:rounded-t-xl lg:px-5">
+        <div className="flex items-center w-full pl-2">
+          <div className="flex items-center gap-4">
             <Link href={`/Music/${musicPlaying.id}`}>
               <div className="flex items-center">
-                <Image
-                  src={musicPlaying.album.images[0].url}
-                  alt={musicPlaying.name}
-                  width={50}
-                  height={50}
-                  className="object-cover rounded-xl"
-                />
+                {musicPlaying.album && musicPlaying.album.images && musicPlaying.album.images[0] && (
+                  <Image
+                    src={musicPlaying.album.images[0].url}
+                    alt={musicPlaying.name}
+                    width={50}
+                    height={50}
+                    className="object-cover rounded-xl"
+                  />
+                )}
 
-                <div className="ml-4 flex-1 w-64">
+                <div className="ml-4">
                   <h3 className="text-lg text-gray-300 font-medium">{musicPlaying.name}</h3>
-                  <p className="text-lg text-gray-400 font-medium -mt-1">{musicPlaying.artists[0].name}</p>
+                  {musicPlaying.artists && musicPlaying.artists[0] && (
+                    <p className="text-lg text-gray-400 font-medium -mt-1">{musicPlaying.artists[0].name}</p>
+                  )}
                 </div>
               </div>
             </Link>
 
-            <div className="flex items-center gap-4 pr-5 pb-1">
+            {isFavorite == true ? (
+              <button onClick={handleAddToFavoritesWithToken} className="text-primary">
+                <FaHeart className="text-primary" size={24} />
+              </button>
+            ) : (
+              <button onClick={handleAddToFavoritesWithToken} className="text-white">
+                <FaHeart className="text-white" size={24} />
+              </button>
+            )}
+          </div>
 
-              {isFavorite == true ? (
-                <button onClick={handleAddToFavoritesWithToken} className="text-primary">
-                  <FaHeart className="text-primary" size={24} /> {/* Ícone de coração */}
-                </button>
-              ) : (
-                <button onClick={handleAddToFavoritesWithToken} className="text-white">
-                  <FaHeart className="text-white" size={24} /> {/* Ícone de coração */}
-                </button>
-              )}
+
+
+          <div className="flex flex-col items-center justify-center w-auto gap-2 mx-auto">
+            <div className="flex items-center gap-4">
+              <button className="text-white">
+                <FaStepForward color="#fff" size={24} />
+              </button>
+
+              <button className="text-white">
+                <FaStepBackward color="#fff" size={24} />
+              </button>
 
               {isPlaying ? (
                 <button onClick={handlePause}>
@@ -213,17 +301,72 @@ const FooterMusic = () => {
                   <FaPause color="#fff" size={24} />
                 </button>
               )}
+
+              <button className="text-white">
+                <FaRandom color="#fff" size={24} /> {/* Ícone de aleatório */}
+              </button>
+
+              <button className="text-white">
+                <FaRedo color="#fff" size={24} /> {/* Ícone de repetir */}
+              </button>
             </div>
 
-            <div className="bg-gray-100 w-[95%] h-[0.3rem] rounded-full fixed bottom-16 left-[2.5%] right-[2.5%]">
-              <div className="bg-primary h-full rounded-full" style={{ width: `${(musicProgress! / musicPlaying.duration_ms) * 100}%` }}></div>
+            <div className="w-96 flex flex-row justify-between items-center">
+              <span className='text-white text-sm'>{formatTime(musicProgress!)}</span>
+              <div className="bg-gray-100 w-[70%] h-[0.4rem] relative rounded-full">
+                <div className="bg-primary h-full rounded-full" style={{ width: `${(musicProgress! / musicPlaying.duration_ms) * 100}%` }}>
+                  <div className="bg-primary w-[0.6rem] h-[0.6rem] rounded-full absolute top-0 -ml-1 -mt-[0.1rem] left-0" style={{ left: `${(musicProgress! / musicPlaying.duration_ms) * 100}%` }}></div>
+                </div>
+              </div>
+              <span className='text-white text-sm'>{formatTime(musicPlaying.duration_ms)}</span>
             </div>
           </div>
 
-        </div>
-      ) : null}
-    </>
 
+
+          <div>
+
+            <div className="flex items-center gap-4 mt-2">
+              <button className="text-white">
+                <FaMicrophone color="#fff" size={24} />
+              </button>
+
+              <button className="text-white">
+                <FaVolumeUp color="#fff" size={24} />
+              </button>
+
+              <button className="text-white">
+                <FaSpeakerDeck color="#fff" size={24} />
+              </button>
+
+              <button className="text-white">
+                <FaList color="#fff" size={24} />
+              </button>
+
+              <button className="text-white">
+                <FaExpand color="#fff" size={24} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </>
   );
 }
 
